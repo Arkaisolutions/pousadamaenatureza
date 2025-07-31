@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Importações do Tailwind CSS */
+/* No ambiente Vite, você usaria @tailwind base; @tailwind components; @tailwind utilities; */
+/* Para este protótipo, a CDN já está configurada no HTML, mas este arquivo pode ser usado para estilos globais. */
+
+body {
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Estilo para simular o efeito de folhas ao vento (pode ser usado em animações) */
+.leaf-animation {
+  animation: sway 5s ease-in-out infinite alternate;
+}
+
+@keyframes sway {
+  0% { transform: rotate(-5deg); }
+  100% { transform: rotate(5deg); }
+}
+
+/* Estilos para scrollbar mais sutil e temático */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Light theme scrollbar */
+::-webkit-scrollbar-track {
+  background: #E6D4B8; /* nature-brown-light */
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #74B7A1; /* nature-green */
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5C8D77; /* nature-green-dark */
+}
+
+/* Dark theme scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: #374151; /* gray-700 */
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #5C8D77; /* nature-green-dark */
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #A7D7C5; /* nature-green-light */
+}
