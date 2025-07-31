@@ -144,6 +144,11 @@ const ScaleIcon = () => (
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.036.243c-2.132 0-4.14-.818-5.62-2.24l-2.62-2.62a1.125 1.125 0 00-1.59 0l-2.62 2.62c-1.48 1.422-3.488 2.24-5.62 2.24a5.988 5.988 0 01-2.036-.243c-.483-.174-.711-.703-.59-1.202L5.25 4.971m13.5 0A48.49 48.49 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52L12 18.25l-2.62-2.62" />
     </svg>
 );
+const Bars3Icon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+    </svg>
+);
 
 
 // ============================================================================
@@ -317,6 +322,8 @@ interface AppContextType {
     toggleDarkMode: () => void;
     currentView: View;
     setCurrentView: React.Dispatch<React.SetStateAction<View>>;
+    isSidebarOpen: boolean;
+    setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
     reservations: Reservation[];
     suiteStatuses: SuiteStatus[];
     costs: Cost[];
@@ -1135,6 +1142,7 @@ const LoginPage: React.FC<{ onLogin: (user: string, pass: string) => boolean, is
 const useAppLogic = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentView, setCurrentView] = useState<View>('dashboard');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [reservations, setReservations] = useState<Reservation[]>(initialReservations);
   const [suiteStatuses, setSuiteStatuses] = useState<SuiteStatus[]>(initialSuiteStatuses);
   const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
@@ -1155,6 +1163,26 @@ const useAppLogic = () => {
     });
     return Array.from(contactMap.values());
   });
+
+  useEffect(() => {
+    // Closes the sidebar when resizing to a desktop view to prevent UI inconsistencies.
+    const handleResize = () => {
+      if (window.innerWidth >= 768) { // Corresponds to Tailwind's 'md' breakpoint
+        setIsSidebarOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    // Locks the body scroll when the off-canvas menu is open on mobile.
+    if (isSidebarOpen) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+  }, [isSidebarOpen]);
 
   const toggleDarkMode = () => setIsDarkMode(prev => {
     document.documentElement.classList.toggle('dark', !prev);
@@ -1204,7 +1232,7 @@ const useAppLogic = () => {
   }, [loggedInUser]);
 
   return {
-    isDarkMode, toggleDarkMode, currentView, setCurrentView, reservations, suiteStatuses,
+    isDarkMode, toggleDarkMode, currentView, setCurrentView, isSidebarOpen, setIsSidebarOpen, reservations, suiteStatuses,
     costs, contacts, loggedInUser, handleLogin, handleLogout, handleAddReservation,
     handleUpdateSuiteStatus, handleUpdateContact, handleAddContact, handleDeleteContact,
     handleAddCost, handleUpdateCost, handleDeleteCost,
@@ -1220,7 +1248,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 // 9. COMPONENTE PRINCIPAL (Main App Component)
 // ============================================================================
 const MainAppLayout: React.FC = () => {
-    const { isDarkMode, toggleDarkMode, currentView, setCurrentView, loggedInUser, handleLogout } = useAppContext();
+    const { isDarkMode, toggleDarkMode, currentView, setCurrentView, loggedInUser, handleLogout, isSidebarOpen, setIsSidebarOpen } = useAppContext();
     const navItems = [
         { id: 'dashboard', label: 'Visão Geral', icon: <HomeIcon /> },
         { id: 'reservations', label: 'Reservas', icon: <CalendarIcon /> },
@@ -1243,12 +1271,38 @@ const MainAppLayout: React.FC = () => {
     return (
         <div className="min-h-screen flex flex-col transition-colors duration-300 font-sans">
             <header className={`p-4 shadow-md ${isDarkMode ? 'bg-gray-800' : 'bg-nature-green'} text-white flex items-center justify-between`}>
-                <div className="flex items-center space-x-2"><LeafIcon /><h1 className="text-xl md:text-2xl font-semibold">Pousada Mãe Natureza</h1></div>
-                <div className="flex items-center gap-4"><span className="text-sm hidden md:inline">Olá, <strong>{loggedInUser}</strong></span><button onClick={toggleDarkMode} className="p-2 rounded-full hover:bg-white/20 transition-colors" aria-label={isDarkMode ? "Ativar tema claro" : "Ativar tema escuro"}>{isDarkMode ? <SunIcon /> : <MoonIcon />}</button><button onClick={handleLogout} className="p-2 rounded-full hover:bg-white/20 transition-colors" aria-label="Sair"><ArrowLeftOnRectangleIcon /></button></div>
+                <div className="flex items-center space-x-2">
+                    <button onClick={() => setIsSidebarOpen(true)} className="md:hidden p-2 -ml-2 rounded-full hover:bg-white/20 transition-colors" aria-label="Abrir menu">
+                        <Bars3Icon />
+                    </button>
+                    <LeafIcon />
+                    <h1 className="text-xl md:text-2xl font-semibold">Pousada Mãe Natureza</h1>
+                </div>
+                <div className="flex items-center gap-4">
+                    <span className="text-sm hidden md:inline">Olá, <strong>{loggedInUser}</strong></span>
+                    <button onClick={toggleDarkMode} className="p-2 rounded-full hover:bg-white/20 transition-colors" aria-label={isDarkMode ? "Ativar tema claro" : "Ativar tema escuro"}>{isDarkMode ? <SunIcon /> : <MoonIcon />}</button>
+                    <button onClick={handleLogout} className="p-2 rounded-full hover:bg-white/20 transition-colors" aria-label="Sair"><ArrowLeftOnRectangleIcon /></button>
+                </div>
             </header>
             <div className="flex flex-1 overflow-hidden">
-                <aside className={`w-16 md:w-56 p-4 space-y-4 transition-all duration-300 ${isDarkMode ? 'bg-gray-800/50 border-r border-gray-700' : 'bg-nature-green-light/80 border-r border-nature-green'}`}>
-                    {navItems.map(item => (<button key={item.id} onClick={() => setCurrentView(item.id as View)} title={item.label} className={`w-full flex items-center space-x-3 p-2 rounded-lg transition-colors ${currentView === item.id ? (isDarkMode ? 'bg-nature-green-dark text-white' : 'bg-nature-green text-white') : (isDarkMode ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-nature-green/50 text-nature-green-dark')}`}>{item.icon}<span className="hidden md:inline">{item.label}</span></button>))}
+                {/* Overlay for mobile */}
+                {isSidebarOpen && <div onClick={() => setIsSidebarOpen(false)} className="fixed inset-0 bg-black/60 z-30 md:hidden" aria-hidden="true" />}
+                
+                <aside className={`fixed md:static inset-y-0 left-0 z-40 w-64 p-4 space-y-4 transform transition-transform duration-300 ease-in-out md:translate-x-0 md:shadow-none ${isSidebarOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'} ${isDarkMode ? 'bg-gray-800 border-r border-gray-700' : 'bg-nature-green-light border-r border-nature-green'}`}>
+                    {navItems.map(item => (
+                        <button 
+                            key={item.id} 
+                            onClick={() => {
+                                setCurrentView(item.id as View);
+                                setIsSidebarOpen(false);
+                            }} 
+                            title={item.label} 
+                            className={`w-full flex items-center space-x-3 p-2 rounded-lg transition-colors ${currentView === item.id ? (isDarkMode ? 'bg-nature-green-dark text-white' : 'bg-nature-green text-white') : (isDarkMode ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-nature-green/50 text-nature-green-dark')}`}
+                        >
+                            {item.icon}
+                            <span>{item.label}</span>
+                        </button>
+                    ))}
                 </aside>
                 <main className="flex-1 overflow-y-auto">{renderView()}</main>
             </div>
