@@ -514,7 +514,7 @@ const UpcomingEvents: React.FC = () => {
 
     if (events.length === 0) return <div className="text-center text-gray-500 py-4">Nenhum evento futuro próximo.</div>;
     return (
-        <div className="space-y-3 max-h-80 overflow-y-auto pr-2">
+        <div className="space-y-3 h-full overflow-y-auto pr-2">
             {events.map((event, index) => (
                 <div key={`${event.reservation.id}-${event.type}-${index}`} className="flex items-center gap-4 p-2 rounded-lg bg-gray-50 dark:bg-gray-700/50">
                     <div className={`text-center w-16 px-2 py-1 rounded-md text-white font-bold ${event.type === 'Check-in' ? 'bg-green-500' : 'bg-red-500'}`}>
@@ -610,7 +610,13 @@ const DashboardPage: React.FC = () => {
                         </div>
                     </Section>
                 </div>
-                <div className="lg:col-span-1"><Section title="Próximos Eventos"><UpcomingEvents /></Section></div>
+                <div className="lg:col-span-1">
+                    <Section title="Próximos Eventos" className="h-full flex flex-col">
+                        <div className="flex-1 min-h-0">
+                            <UpcomingEvents />
+                        </div>
+                    </Section>
+                </div>
             </div>
         </div>
     );
