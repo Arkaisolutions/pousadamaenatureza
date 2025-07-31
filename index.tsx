@@ -711,6 +711,7 @@ const MonthlyCalendarView: React.FC = () => {
 
 const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; }> = ({ isOpen, onClose }) => {
     const { handleAddReservation } = useAppContext();
+    const [isSaving, setIsSaving] = useState(false);
     const [newRes, setNewRes] = useState<NewReservationData>({
         guestName: '', contact: '', accommodation: 'POUSADA TOTAL', bookingChannel: 'Reserva WhatsApp', description: '', adults: 2, children: 0,
         extraBed: false, breakfast: false, checkIn: '', checkOut: '', totalRevenue: 0, amountPaid: 0, observations: '', status: 'Confirmada',
@@ -718,6 +719,7 @@ const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; }> =
 
     useEffect(() => {
         if(isOpen) {
+            setIsSaving(false);
             setNewRes({
                 guestName: '', contact: '', accommodation: 'POUSADA TOTAL', bookingChannel: 'Reserva WhatsApp', description: '', adults: 2, children: 0,
                 extraBed: false, breakfast: false, checkIn: '', checkOut: '', totalRevenue: 0, amountPaid: 0, observations: '', status: 'Confirmada',
@@ -740,8 +742,13 @@ const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; }> =
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        handleAddReservation(newRes);
-        onClose();
+        if (isSaving) return;
+        setIsSaving(true);
+        // Simulate API call for better UX
+        setTimeout(() => {
+            handleAddReservation(newRes);
+            onClose();
+        }, 500);
     };
 
     return (
@@ -761,7 +768,7 @@ const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; }> =
                         <div><label htmlFor="bookingChannel" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Canal da Reserva</label><input type="text" name="bookingChannel" id="bookingChannel" value={newRes.bookingChannel} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-nature-green focus:ring-nature-green bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
                         <div><label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label><select name="status" id="status" value={newRes.status} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-nature-green focus:ring-nature-green bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"><option>Confirmada</option><option>Cancelada</option><option>Pendente</option></select></div>
                     </div>
-                     <footer className="flex items-center justify-end gap-4 pt-4 border-t dark:border-gray-700"><button type="button" onClick={onClose} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 transition-colors">Cancelar</button><button type="submit" className="px-4 py-2 bg-nature-green text-white font-semibold rounded-lg shadow-md hover:bg-nature-green-dark transition-colors">Salvar Reserva</button></footer>
+                     <footer className="flex items-center justify-end gap-4 pt-4 border-t dark:border-gray-700"><button type="button" onClick={onClose} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 transition-colors">Cancelar</button><button type="submit" disabled={isSaving} className="px-4 py-2 bg-nature-green text-white font-semibold rounded-lg shadow-md hover:bg-nature-green-dark transition-colors disabled:bg-nature-green/70 disabled:cursor-not-allowed">{isSaving ? 'Salvando...' : 'Salvar Reserva'}</button></footer>
                 </form>
             </div>
         </div>
@@ -1088,10 +1095,22 @@ const LoginPage: React.FC<{ onLogin: (user: string, pass: string) => boolean, is
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!onLogin(login, password)) { setError('Credenciais inválidas. Tente novamente.'); setPassword(''); }
+        setError('');
+        setIsLoading(true);
+        // Simulate API call for better UX
+        setTimeout(() => {
+            if (!onLogin(login, password)) {
+                setError('Credenciais inválidas. Tente novamente.');
+                setPassword('');
+            }
+            setIsLoading(false);
+        }, 500);
     };
+
     return (
         <div className={`min-h-screen flex flex-col items-center justify-center transition-colors duration-300 font-sans ${isDarkMode ? 'dark bg-gray-900 text-gray-100' : 'bg-nature-brown-light text-nature-text'}`}>
             <div className="absolute top-4 right-4"><button onClick={onToggleDarkMode} className={`p-2 rounded-full ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-white/50'} transition-colors`} aria-label={isDarkMode ? "Ativar tema claro" : "Ativar tema escuro"}>{isDarkMode ? <SunIcon /> : <MoonIcon />}</button></div>
@@ -1101,7 +1120,7 @@ const LoginPage: React.FC<{ onLogin: (user: string, pass: string) => boolean, is
                         <div><label htmlFor="login" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Login</label><input type="text" id="login" value={login} onChange={(e) => setLogin(e.target.value)} required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-nature-green focus:ring-nature-green bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Larissa"/></div>
                         <div><label htmlFor="password"className="block text-sm font-medium text-gray-700 dark:text-gray-300">Senha</label><input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-nature-green focus:ring-nature-green bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="••••••••"/></div>
                         {error && (<p className="text-sm text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/50 p-3 rounded-md text-center">{error}</p>)}
-                        <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-nature-green hover:bg-nature-green-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nature-green-dark transition-colors">Entrar</button>
+                        <button type="submit" disabled={isLoading} className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-nature-green hover:bg-nature-green-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nature-green-dark transition-colors disabled:bg-nature-green/70 disabled:cursor-not-allowed">{isLoading ? 'Entrando...' : 'Entrar'}</button>
                     </form>
                 </div><p className="text-center text-xs text-gray-500 mt-8">© {new Date().getFullYear()} Pousada Mãe Natureza - Sistema de Controle de Reservas.</p>
             </div>
