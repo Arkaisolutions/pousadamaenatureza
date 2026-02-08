@@ -8,17 +8,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        'nature-green': {
-          light: '#A7D7C5',
-          DEFAULT: '#74B7A1',
-          dark: '#5C8D77',
+        'hotel-blue': {
+          light: '#60A5FA', // Azul claro vibrante
+          DEFAULT: '#2563EB', // Azul Royal padrão
+          dark: '#1E3A8A', // Azul Marinho profundo
         },
-        'nature-brown': {
-          light: '#E6D4B8',
-          DEFAULT: '#D3B893',
-          dark: '#A17C5B',
+        'hotel-slate': {
+          light: '#F8FAFC', // Branco/Gelo
+          DEFAULT: '#E2E8F0', // Cinza claro para fundos
+          dark: '#64748B', // Cinza médio para bordas/detalhes
         },
-        'nature-text': '#3C3C3C',
+        'hotel-text': '#1E293B', // Cinza escuro para texto (Slate 800)
       },
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
