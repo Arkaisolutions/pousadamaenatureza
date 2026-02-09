@@ -115,7 +115,7 @@ const TrashIcon = () => (
 );
 const Cog6ToothIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257-1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995s.145.755.438.995l1.003.827c.424.35.534.954.26 1.431l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.075.124a6.57 6.57 0 01-.22.127c-.332.183-.582.495-.645.87l-.213 1.281c-.09.542-.56.94-1.11-.94h-2.593c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313.686-.645-.87-.074-.04-.147-.083-.22-.127-.324.196-.72.257-1.075.124l-1.217.456a1.125 1.125 0 01-1.37-.49l-1.296-2.247a1.125 1.125 0 01.26-1.431l1.003-.827c.293-.24.438.613-.438.995s-.145-.755-.438-.995l-1.003-.827a1.125 1.125 0 01-.26-1.431l1.296-2.247a1.125 1.125 0 011.37.49l1.217.456c.355.133.75.072 1.075.124.074-.04.147-.083.22-.127.332-.183-.582-.495-.645-.87l.213-1.281z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257-1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995s.145.755.438.995l1.003.827c.424.35.534.954.26 1.431l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.075.124a6.57 6.57 0 01-.26.127c-.332.183-.582.495-.645.87l-.213 1.281c-.09.542-.56.94-1.11-.94h-2.593c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313.686-.645-.87-.074-.04-.147-.083-.22-.127-.324.196-.72.257-1.075.124l-1.217.456a1.125 1.125 0 01-1.37-.49l-1.296-2.247a1.125 1.125 0 01.26-1.431l1.003-.827c.293-.24.438.613-.438.995s-.145-.755-.438-.995l-1.003-.827a1.125 1.125 0 01-.26-1.431l1.296-2.247a1.125 1.125 0 011.37.49l1.217.456c.355.133.75.072 1.075.124.074-.04.147-.083.22-.127.332-.183-.582-.495-.645-.87l.213-1.281z" />
       <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
     </svg>
 );
@@ -126,7 +126,7 @@ const ArrowLeftOnRectangleIcon = () => (
 );
 const BanknotesIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414-.336.75-.75.75h-.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5m3-3l-3-3m0 0l-3 3m3-3v6m-9 3h2.25a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75H5.25a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75m3-3h2.25a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75H8.25a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75m3-3h2.25a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75h-2.25a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75M15 12h-3v-3h3v3z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414-.336.75-.75.75h-.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5m3-3l-3-3m0 0l-3 3m3-3v6m-9 3h2.25a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75H5.25a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75m3-3h2.25a.75.75 0 00.75-.75V15a.75.75 0 00-.75.75H8.25a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75m3-3h2.25a.75.75 0 00.75-.75V15a.75.75 0 00-.75.75h-2.25a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75M15 12h-3v-3h3v3z" />
     </svg>
 );
 const ArrowTrendingDownIcon = () => (
@@ -257,72 +257,22 @@ const parseSuitesFromReservation = (res: Reservation): number => {
 // ============================================================================
 // 4. DADOS INICIAIS (Initial Data)
 // ============================================================================
+// RESET DE DADOS PARA NOVO HOTEL: Hotel Palace Serra Verde Imperial
 const initialReservationsData: Omit<Reservation, 'amountPending' | 'downPayment'>[] = [
-  // ... dados existentes de 2024
-  { id: 1, guestName: "Isa Blas - Fazenda São Domingos", contact: "21 96442-9038", accommodation: "HOTEL COMPLETO", bookingChannel: "Reserva WhatsApp", description: "Andar Executivo", adults: 16, children: 6, extraBed: false, breakfast: false, checkIn: "2024-11-09", checkOut: "2024-11-10", numberOfNights: 1, totalRevenue: 2700, amountPaid: 2700, observations: "", status: 'Confirmada' },
-  { id: 2, guestName: "Beatriz dos Santos Ferreira", contact: "21 97350-8530", accommodation: "HOTEL COMPLETO", bookingChannel: "Reserva Tráfego Instagram", description: "6 Suítes Master", adults: 16, children: 3, extraBed: false, breakfast: false, checkIn: "2024-11-15", checkOut: "2024-11-18", numberOfNights: 3, totalRevenue: 6540, amountPaid: 6540, observations: "", status: 'Confirmada' },
-  { id: 3, guestName: "Norman macpherson Garcia", contact: "21 98814-3600", accommodation: "HOTEL COMPLETO", bookingChannel: "Reserva WhatsApp", description: "8 Suítes", adults: 16, children: 0, extraBed: true, breakfast: true, checkIn: "2024-12-14", checkOut: "2024-12-15", numberOfNights: 1, totalRevenue: 3200, amountPaid: 3200, observations: "", status: 'Confirmada' },
-  { id: 4, guestName: "Grupo do Thiago", contact: "21 97926-9000", accommodation: "Reserva direta (primo)", bookingChannel: "Reserva direta (primo)", description: "8 Suítes", adults: 18, children: 0, extraBed: false, breakfast: false, checkIn: "2024-12-28", checkOut: "2025-01-02", numberOfNights: 5, totalRevenue: 9200, amountPaid: 9200, observations: "", status: 'Confirmada' },
-  { id: 5, guestName: "BRL Comércio de Veículos Ltda.", contact: "22 99964-2427", accommodation: "HOTEL COMPLETO", bookingChannel: "Reserva WhatsApp", description: "8 Suítes", adults: 25, children: 0, extraBed: false, breakfast: false, checkIn: "2024-12-24", checkOut: "2024-12-25", numberOfNights: 1, totalRevenue: 2850, amountPaid: 2850, observations: "", status: 'Confirmada' },
-    // ... dados existentes de 2025-2026
-    { id: 6, guestName: 'Cesar Augusto da Silva Couto', contact: '21 96736-5151', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: '8 Suítes', adults: 16, children: 8, extraBed: false, breakfast: false, checkIn: '2025-02-28', checkOut: '2025-03-05', numberOfNights: 5, totalRevenue: 16000, amountPaid: 16000, observations: '*Cada família pagará R$ 33,40 referente a mesa de ping pong.', status: 'Confirmada' },
-    { id: 7, guestName: 'Rogério lopes macedo', contact: '21 98741-0946', accommodation: 'SALA DE EVENTOS', bookingChannel: 'Reserva WhatsApp', description: 'Uso do Hall', adults: 2, children: 2, extraBed: false, breakfast: false, checkIn: '2025-02-28', checkOut: '2025-03-05', numberOfNights: 5, totalRevenue: 1700, amountPaid: 1700, observations: '', status: 'Confirmada' },
-    { id: 8, guestName: 'Lilian V B Panzenhagem', contact: '21 98871-9001', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva Airbnb', description: '8 Suítes', adults: 16, children: 4, extraBed: false, breakfast: false, checkIn: '2025-01-18', checkOut: '2025-01-19', numberOfNights: 1, totalRevenue: 2422, amountPaid: 2422, observations: '', status: 'Confirmada' },
-    { id: 9, guestName: 'Lilian V B Panzenhagem', contact: '21 98871-9001', accommodation: 'SALA DE EVENTOS', bookingChannel: 'Reserva direta', description: 'Hall', adults: 2, children: 0, extraBed: false, breakfast: false, checkIn: '2025-01-18', checkOut: '2025-01-19', numberOfNights: 1, totalRevenue: 160, amountPaid: 160, observations: '', status: 'Confirmada' },
-    { id: 10, guestName: 'Nicolle Andrade Pereira Pinto', contact: '21 99361-7887', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva direta', description: '8 Suítes', adults: 16, children: 3, extraBed: false, breakfast: false, checkIn: '2025-01-09', checkOut: '2025-01-12', numberOfNights: 3, totalRevenue: 7500, amountPaid: 7500, observations: '', status: 'Confirmada' },
-    { id: 11, guestName: 'Pastor Emerson', contact: '22 99882-2974', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva direta', description: '9 Suítes', adults: 14, children: 5, extraBed: false, breakfast: false, checkIn: '2025-02-21', checkOut: '2025-02-22', numberOfNights: 1, totalRevenue: 2500, amountPaid: 2500, observations: '', status: 'Confirmada' },
-    { id: 12, guestName: 'Pastor Emerson', contact: '22 99882-2974', accommodation: 'SALA DE EVENTOS', bookingChannel: 'Reserva direta', description: 'Hall', adults: 11, children: 2, extraBed: false, breakfast: false, checkIn: '2025-02-21', checkOut: '2025-02-22', numberOfNights: 1, totalRevenue: 420, amountPaid: 420, observations: '', status: 'Confirmada' },
-    { id: 13, guestName: 'Rebeca Bittencourt', contact: '21 99975-0909', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva direta', description: '8 Suítes', adults: 13, children: 4, extraBed: false, breakfast: false, checkIn: '2025-04-18', checkOut: '2025-04-21', numberOfNights: 3, totalRevenue: 8340, amountPaid: 8340, observations: '', status: 'Confirmada' },
-    { id: 14, guestName: 'Rebeca Bittencourt', contact: '21 99975-0909', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva direta', description: '1 Suíte', adults: 2, children: 0, extraBed: false, breakfast: false, checkIn: '2025-04-21', checkOut: '2025-04-22', numberOfNights: 1, totalRevenue: 330, amountPaid: 330, observations: '', status: 'Confirmada' },
-    { id: 15, guestName: 'Piettra Melo Novello', contact: '21 96549-4993', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva direta', description: '8 Suítes', adults: 24, children: 5, extraBed: false, breakfast: false, checkIn: '2025-01-25', checkOut: '2025-01-26', numberOfNights: 1, totalRevenue: 3120, amountPaid: 3120, observations: '', status: 'Confirmada' },
-    { id: 16, guestName: 'Piettra Melo Novello', contact: '21 96549-4993', accommodation: 'SALA DE EVENTOS', bookingChannel: 'Reserva direta', description: 'Hall', adults: 4, children: 0, extraBed: false, breakfast: false, checkIn: '2025-01-26', checkOut: '2025-01-27', numberOfNights: 1, totalRevenue: 330, amountPaid: 330, observations: '', status: 'Confirmada' },
-    { id: 17, guestName: 'Cesar Augusto da Silva Couto', contact: '21 96736-5151', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: '8 Suítes', adults: 16, children: 14, extraBed: false, breakfast: false, checkIn: '2025-06-19', checkOut: '2025-06-21', numberOfNights: 3, totalRevenue: 8400, amountPaid: 8400.01, observations: '', status: 'Confirmada' },
-    { id: 18, guestName: 'Cesar Augusto da Silva Couto', contact: '22 96736-5151', accommodation: '1 SUÍTE', bookingChannel: 'Reserva WhatsApp', description: '1', adults: 2, children: 1, extraBed: false, breakfast: false, checkIn: '2025-06-18', checkOut: '2025-06-19', numberOfNights: 1, totalRevenue: 350, amountPaid: 350, observations: '', status: 'Confirmada' },
-    { id: 19, guestName: 'Rogério lopes macedo', contact: '21 98741-0946', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: 'Hall', adults: 2, children: 2, extraBed: false, breakfast: false, checkIn: '2025-06-19', checkOut: '2025-06-21', numberOfNights: 3, totalRevenue: 990, amountPaid: 990.07, observations: '', status: 'Confirmada' },
-    { id: 20, guestName: 'Maitê Buarque de Menezes', contact: '93 9108-2344', accommodation: '1 SUÍTE', bookingChannel: 'Reserva WhatsApp', description: '1 Suíte', adults: 2, children: 0, extraBed: false, breakfast: false, checkIn: '2025-04-11', checkOut: '2025-04-14', numberOfNights: 3, totalRevenue: 0, amountPaid: 0, observations: '(golpe)', status: 'Cancelada' },
-    { id: 21, guestName: 'Fabiaba Ugarte', contact: '21 97028-3996', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: '8 Suítes', adults: 16, children: 3, extraBed: false, breakfast: false, checkIn: '2025-04-12', checkOut: '2025-04-13', numberOfNights: 1, totalRevenue: 2640, amountPaid: 2640, observations: 'Cliente mandou comprovante de pix falso e pediu reembolso', status: 'Confirmada' },
-    { id: 22, guestName: 'Fabiaba Ugarte', contact: '22 97028-3996', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: 'Adicional', adults: 7, children: 0, extraBed: false, breakfast: false, checkIn: '2025-04-12', checkOut: '2025-04-13', numberOfNights: 1, totalRevenue: 560, amountPaid: 560, observations: 'Cliente pagou 189,00 a mais referente a sanduicheira quebrada', status: 'Confirmada' },
-    { id: 23, guestName: 'Fabiaba Ugarte', contact: '22 97028-3996', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: 'Hall', adults: 1, children: 11, extraBed: false, breakfast: false, checkIn: '2025-04-12', checkOut: '2025-04-13', numberOfNights: 1, totalRevenue: 300, amountPaid: 300, observations: 'esse valor não foi adicionado na planilha', status: 'Confirmada' },
-    { id: 24, guestName: 'Rodrigo Couto', contact: '21 96536-0730', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva direta', description: '8 Suítes', adults: 16, children: 3, extraBed: false, breakfast: false, checkIn: '2025-12-24', checkOut: '2025-12-26', numberOfNights: 2, totalRevenue: 5280, amountPaid: 5280, observations: '', status: 'Confirmada' },
-    { id: 25, guestName: 'Carolina Soares Rufino de Andrade', contact: '21 99341-9553', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: '8 Suítes', adults: 16, children: 4, extraBed: false, breakfast: false, checkIn: '2025-11-28', checkOut: '2025-11-30', numberOfNights: 2, totalRevenue: 5168, amountPaid: 5168, observations: '', status: 'Confirmada' },
-    { id: 26, guestName: 'Aniversário Maia (Munique)', contact: '21988159723', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: '1 Suíte', adults: 0, children: 0, extraBed: false, breakfast: false, checkIn: '2025-11-21', checkOut: '2025-11-23', numberOfNights: 1, totalRevenue: 0, amountPaid: 0, observations: 'Aniversário de Maia.', status: 'Confirmada' },
-    { id: 27, guestName: 'Leticia Bignon', contact: '21 98432-4087', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva direta', description: '8 suítes', adults: 0, children: 0, extraBed: false, breakfast: false, checkIn: '2025-06-28', checkOut: '2025-06-29', numberOfNights: 1, totalRevenue: 2400, amountPaid: 2400, observations: '', status: 'Confirmada' },
-    { id: 28, guestName: 'Valesca Neris', contact: '21 98024-7897', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: '8 suítes', adults: 0, children: 0, extraBed: false, breakfast: false, checkIn: '2025-11-15', checkOut: '2025-11-16', numberOfNights: 1, totalRevenue: 2960, amountPaid: 1000, observations: '', status: 'Confirmada' },
-    { id: 29, guestName: 'Marlos Moreira', contact: '21 992151507', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: '8 suítes', adults: 18, children: 1, extraBed: true, breakfast: true, checkIn: '2025-08-01', checkOut: '2025-08-03', numberOfNights: 2, totalRevenue: 6760, amountPaid: 3380, observations: '', status: 'Confirmada' },
-    { id: 30, guestName: 'Marcos Leo Labis Vieira', contact: '2299835-9997', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva direta', description: '8 suítes', adults: 16, children: 0, extraBed: false, breakfast: false, checkIn: '2025-12-13', checkOut: '2025-12-14', numberOfNights: 1, totalRevenue: 2500, amountPaid: 1250, observations: '', status: 'Confirmada' },
-    { id: 31, guestName: 'Ronan Fonseca Sardinha', contact: '21 97625-7637', accommodation: '1 SUÍTE', bookingChannel: 'Reserva direta', description: '1 Suíte', adults: 2, children: 0, extraBed: false, breakfast: false, checkIn: '2025-07-27', checkOut: '2025-07-28', numberOfNights: 1, totalRevenue: 115, amountPaid: 0, observations: '', status: 'Cancelada' },
-    { id: 32, guestName: 'Amigos Ronan', contact: '', accommodation: '1 SUÍTE', bookingChannel: 'Reserva direta', description: '2 Suítes', adults: 4, children: 0, extraBed: false, breakfast: false, checkIn: '2025-07-27', checkOut: '2025-07-28', numberOfNights: 1, totalRevenue: 660, amountPaid: 0, observations: '', status: 'Cancelada' },
-    { id: 33, guestName: 'Emanuela Santos da Silva', contact: '21 99623-5805', accommodation: '1 SUÍTE', bookingChannel: 'Reserva WhatsApp', description: '1 Suíte', adults: 2, children: 1, extraBed: true, breakfast: false, checkIn: '2025-07-25', checkOut: '2025-07-27', numberOfNights: 2, totalRevenue: 703, amountPaid: 703, observations: '', status: 'Confirmada' },
-    { id: 34, guestName: 'Leticia Bignon', contact: '21 98432-4087', accommodation: '1 SUÍTE', bookingChannel: 'Reserva WhatsApp', description: '4 Suítes', adults: 8, children: 4, extraBed: false, breakfast: false, checkIn: '2025-08-23', checkOut: '2025-08-24', numberOfNights: 1, totalRevenue: 1290, amountPaid: 645, observations: '', status: 'Confirmada' },
-    { id: 35, guestName: 'Thiago de Castro', contact: '21 99700-2920', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: '7 Suítes', adults: 14, children: 5, extraBed: false, breakfast: true, checkIn: '2025-10-03', checkOut: '2025-10-05', numberOfNights: 2, totalRevenue: 5600, amountPaid: 0, observations: '', status: 'Confirmada' },
-    { id: 36, guestName: 'Cesar Augusto da Silva Couto', contact: '21 96736-5151', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: '8 Suítes', adults: 16, children: 5, extraBed: false, breakfast: false, checkIn: '2026-02-13', checkOut: '2026-02-18', numberOfNights: 5, totalRevenue: 18000, amountPaid: 0, observations: '', status: 'Confirmada' },
-    { id: 37, guestName: 'Rogério lopes macedo', contact: '21 98741-0946', accommodation: 'SALA DE EVENTOS', bookingChannel: 'Reserva WhatsApp', description: 'Hall', adults: 2, children: 2, extraBed: false, breakfast: false, checkIn: '2026-02-13', checkOut: '2026-02-18', numberOfNights: 5, totalRevenue: 1900, amountPaid: 0, observations: '', status: 'Confirmada' },
-    { id: 38, guestName: 'Reserva Ano Novo', contact: '', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: '8 Suítes', adults: 16, children: 4, extraBed: false, breakfast: false, checkIn: '2025-12-30', checkOut: '2026-01-04', numberOfNights: 5, totalRevenue: 16000, amountPaid: 0, observations: '', status: 'Confirmada' },
+  // Dados de exemplo apenas para demonstração do sistema limpo
+  { id: 1, guestName: "Exemplo Hóspede VIP", contact: "21 99999-9999", accommodation: "Suíte Imperial", bookingChannel: "Reserva Direta", description: "1 Suíte Master", adults: 2, children: 0, extraBed: false, breakfast: true, checkIn: new Date().toISOString().split('T')[0], checkOut: new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0], numberOfNights: 2, totalRevenue: 1500, amountPaid: 1500, observations: "Teste de sistema limpo", status: 'Confirmada' },
 ];
 const initialReservations = initialReservationsData.map(r => ({ ...r, amountPending: r.totalRevenue - r.amountPaid, downPayment: r.amountPaid > 0 }));
 
 const initialContactsData: Contact[] = [
-    { id: 1, name: "Karla Lima", company: 'KL Eventos', email: 'karla.l@klevents.com', phone: '11987654321', status: 'Novo', location: 'São Paulo, SP', notes: 'Pedido de cotação para evento corporativo em Nov/25', createdAt: '2024-07-25T10:00:00Z', lastUpdate: '2024-07-25T10:00:00Z' },
-    { id: 2, name: "Tobias Lacerda", company: 'Família Lacerda', email: 'tobias.lacerda@email.com', phone: '21998877665', status: 'Contatado', location: 'Rio de Janeiro, RJ', notes: 'Interesse em pacote de feriado. Enviar proposta.', createdAt: '2024-07-24T15:20:00Z', lastUpdate: '2024-07-25T09:30:00Z' },
-    { id: 3, name: "Carla Silva", company: 'Grupo de Amigos', email: 'carla.silva@email.com', phone: '31988889999', status: 'Qualificado', location: 'Belo Horizonte, MG', notes: 'Aniversário. Orçamento aprovado, aguardando data.', createdAt: '2024-07-23T11:00:00Z', lastUpdate: '2024-07-24T18:00:00Z' },
-    { id: 4, name: "Ana Costa", email: 'ana.costa@email.com', phone: '22999998888', status: 'Não Qualificado', location: 'Cabo Frio, RJ', notes: 'Buscava pousada pet-friendly. Nossa política não atende.', createdAt: '2024-07-22T14:00:00Z', lastUpdate: '2024-07-22T14:30:00Z' },
-    { id: 5, name: "Breno Lima", email: 'breno.lima@email.com', phone: '21977776666', status: 'Qualificado', location: 'Niterói, RJ', notes: 'Retiro de yoga, grupo de 15 pessoas.', createdAt: '2024-07-21T18:00:00Z', lastUpdate: '2024-07-23T12:00:00Z' },
-    { id: 6, name: "Sara Pereira", company: 'Viagens & Cia', email: 'sara.p@viagenscia.com', phone: '11965654343', status: 'Agendado', location: 'São Paulo, SP', notes: 'Agendada visita técnica para avaliar a estrutura.', createdAt: '2024-07-20T09:00:00Z', lastUpdate: '2024-07-25T11:00:00Z' },
-    { id: 7, name: 'Diego Gomes', company: 'Tech Solutions', email: 'diego.g@techs.com', phone: '48987651234', status: 'Qualificado', location: 'Florianópolis, SC', notes: 'Confraternização de final de ano.', createdAt: '2024-07-19T16:00:00Z', lastUpdate: '2024-07-22T10:00:00Z'},
-    { id: 8, name: 'Rafael Oliveira', company: 'Família Oliveira', email: 'rafael.o@email.com', phone: '21988881111', status: 'Convertido', location: 'Rio de Janeiro, RJ', notes: 'Reserva confirmada para o carnaval 2026.', createdAt: '2024-07-18T13:00:00Z', lastUpdate: '2024-07-20T17:00:00Z'},
+    { id: 1, name: "Exemplo Agência", company: 'Viagens Imperial', email: 'contato@imperial.com', phone: '11987654321', status: 'Novo', location: 'São Paulo, SP', notes: 'Interesse em parceria corporativa', createdAt: new Date().toISOString(), lastUpdate: new Date().toISOString() },
 ];
 
 const initialCosts: Cost[] = [
-    { id: 1, description: 'Comissão Booking.com - Nov/24', category: 'Comissões', type: 'Variável', amount: 450.50, date: '2024-11-30' },
-    { id: 2, description: 'Limpeza e Lavanderia', category: 'Utilities', type: 'Fixo', amount: 800, date: '2024-11-28' },
-    { id: 3, description: 'Reparo ar condicionado Suíte 3', category: 'Manutenção', type: 'Variável', amount: 350, date: '2024-12-05' },
-    { id: 4, description: 'Salário - Funcionário 1', category: 'Salários', type: 'Fixo', amount: 1800, date: '2025-01-05' },
-    { id: 5, description: 'Anúncios Google Ads', category: 'Marketing', type: 'Fixo', amount: 250, date: '2025-01-10' },
-    { id: 6, description: 'Conta de Luz', category: 'Utilities', type: 'Fixo', amount: 550.75, date: '2025-01-15' },
-    { id: 7, description: 'Comissão Airbnb - Jan/25', category: 'Comissões', type: 'Variável', amount: 320.00, date: '2025-01-31' },
+    { id: 1, description: 'Manutenção Inicial - Jardim', category: 'Manutenção', type: 'Variável', amount: 250.00, date: new Date().toISOString().split('T')[0] },
 ];
 
-const initialSuiteStatuses: SuiteStatus[] = Array.from({ length: 12 }, (_, i) => ({
+const initialSuiteStatuses: SuiteStatus[] = Array.from({ length: 20 }, (_, i) => ({
     id: i + 1,
     name: `Apto ${i + 1}`,
     status: 'clean',
@@ -538,7 +488,7 @@ const DashboardPage: React.FC = () => {
     const { reservations: allReservations } = useAppContext();
     const [selectedYear, setSelectedYear] = useState<'all' | number>(new Date().getFullYear());
 
-    const { years, confirmed, totalGuests, cancellationRate, repeatGuestCount, occupancyRate, adr, revPar, avgStayLength, totalRevenue, totalPaid, totalPending, ticketMedio, comparisonData } = useMemo(() => {
+    const { years, confirmed, totalGuests, cancellationRate, repeatGuestCount, occupancyRate, adr, revPar, avgStayLength, totalRevenue, totalPaid, totalPending, ticketMedio, totalCommission, comparisonData } = useMemo(() => {
         const yearSet = new Set(allReservations.map(r => new Date(r.checkIn).getFullYear()));
         const years = ['all', ...Array.from(yearSet).sort((a,b) => b-a)];
         const reservations = selectedYear === 'all' ? allReservations : allReservations.filter(r => new Date(r.checkIn).getFullYear() === selectedYear);
@@ -550,6 +500,9 @@ const DashboardPage: React.FC = () => {
             return acc;
         }, {} as Record<string, number>);
         const repeatGuestCount = Object.values(guestStayCounts).filter(count => count > 1).length;
+        
+        // Cálculo da Comissão de 20%
+        const totalCommission = currentMetrics.totalRevenue * 0.20;
 
         let comparisonData: any = {};
         if (typeof selectedYear === 'number') {
@@ -574,7 +527,7 @@ const DashboardPage: React.FC = () => {
                 };
             }
         }
-        return { ...currentMetrics, years, repeatGuestCount, comparisonData };
+        return { ...currentMetrics, years, repeatGuestCount, totalCommission, comparisonData };
     }, [allReservations, selectedYear]);
     
     return (
@@ -591,9 +544,9 @@ const DashboardPage: React.FC = () => {
                     <Section title="Resumo Financeiro">
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <KpiCard title="Receita Total" value={formatCurrency(totalRevenue)} icon={<DollarIcon />} colorClass="bg-blue-600" comparison={comparisonData.totalRevenue} />
+                            <KpiCard title="Total Comissões (20%)" value={formatCurrency(totalCommission)} icon={<BanknotesIcon />} colorClass="bg-purple-700" description="Controle Agência" />
                             <KpiCard title="Receita Realizada" value={formatCurrency(totalPaid)} icon={<DollarIcon />} colorClass="bg-green-600" comparison={comparisonData.totalPaid} />
                             <KpiCard title="Saldo Pendente" value={formatCurrency(totalPending)} icon={<DollarIcon />} colorClass="bg-amber-500" comparison={comparisonData.totalPending} />
-                            <KpiCard title="Ticket Médio" value={formatCurrency(ticketMedio)} icon={<BuildingIcon />} colorClass="bg-teal-600" comparison={comparisonData.ticketMedio} />
                         </div>
                     </Section>
                     <Section title="Métricas Chave de Desempenho (KPIs)">
@@ -773,7 +726,11 @@ const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; }> =
                         <div><label htmlFor="checkOut" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Check-out</label><input type="date" name="checkOut" id="checkOut" required value={newRes.checkOut} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
                         <div><label htmlFor="adults" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Adultos</label><input type="number" name="adults" id="adults" min="0" required value={newRes.adults || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
                         <div><label htmlFor="children" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Crianças</label><input type="number" name="children" id="children" min="0" required value={newRes.children || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
-                        <div><label htmlFor="totalRevenue" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Valor Total (R$)</label><input type="number" name="totalRevenue" id="totalRevenue" min="0" step="0.01" required value={newRes.totalRevenue || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
+                        <div>
+                            <label htmlFor="totalRevenue" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Valor Total (R$)</label>
+                            <input type="number" name="totalRevenue" id="totalRevenue" min="0" step="0.01" required value={newRes.totalRevenue || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/>
+                            {newRes.totalRevenue > 0 && <div className="text-xs text-blue-600 dark:text-blue-400 mt-1 font-semibold">Comissão Agência (20%): {formatCurrency(newRes.totalRevenue * 0.2)}</div>}
+                        </div>
                         <div><label htmlFor="amountPaid" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Valor Pago (R$)</label><input type="number" name="amountPaid" id="amountPaid" min="0" step="0.01" required value={newRes.amountPaid || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
                         <div><label htmlFor="bookingChannel" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Canal da Reserva</label><input type="text" name="bookingChannel" id="bookingChannel" value={newRes.bookingChannel} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
                         <div><label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label><select name="status" id="status" value={newRes.status} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"><option>Confirmada</option><option>Cancelada</option><option>Pendente</option></select></div>
@@ -1124,7 +1081,7 @@ const LoginPage: React.FC<{ onLogin: (user: string, pass: string) => boolean, is
     return (
         <div className={`min-h-screen flex flex-col items-center justify-center transition-colors duration-300 font-sans ${isDarkMode ? 'dark bg-gray-900 text-gray-100' : 'bg-hotel-slate-light text-hotel-text'}`}>
             <div className="absolute top-4 right-4"><button onClick={onToggleDarkMode} className={`p-2 rounded-full ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-white/50'} transition-colors`} aria-label={isDarkMode ? "Ativar tema claro" : "Ativar tema escuro"}>{isDarkMode ? <SunIcon /> : <MoonIcon />}</button></div>
-            <div className="w-full max-w-md mx-auto p-8"><div className="text-center mb-8"><div className="inline-flex items-center justify-center bg-hotel-blue text-white rounded-full h-16 w-16 mb-4"><BuildingIcon /></div><h1 className="text-3xl font-bold text-hotel-blue-dark dark:text-hotel-blue-light">Hotel Palace - Canal de vendas</h1><p className="text-gray-600 dark:text-gray-300 mt-1">Bem-vindo(a) ao seu painel de controle corporativo.</p></div>
+            <div className="w-full max-w-md mx-auto p-8"><div className="text-center mb-8"><div className="inline-flex items-center justify-center bg-hotel-blue text-white rounded-full h-16 w-16 mb-4"><BuildingIcon /></div><h1 className="text-3xl font-bold text-hotel-blue-dark dark:text-hotel-blue-light">Hotel Palace Serra Verde Imperial</h1><p className="text-gray-600 dark:text-gray-300 mt-1">Bem-vindo(a) ao seu painel de controle corporativo.</p></div>
                 <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div><label htmlFor="login" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Login</label><input type="text" id="login" value={login} onChange={(e) => setLogin(e.target.value)} required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Admin"/></div>
@@ -1132,7 +1089,7 @@ const LoginPage: React.FC<{ onLogin: (user: string, pass: string) => boolean, is
                         {error && (<p className="text-sm text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/50 p-3 rounded-md text-center">{error}</p>)}
                         <button type="submit" disabled={isLoading} className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-hotel-blue hover:bg-hotel-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hotel-blue-dark transition-colors disabled:bg-hotel-blue/70 disabled:cursor-not-allowed">{isLoading ? 'Entrando...' : 'Entrar'}</button>
                     </form>
-                </div><p className="text-center text-xs text-gray-500 mt-8">© {new Date().getFullYear()} Hotel Palace - Canal de vendas - Sistema de Gestão.</p>
+                </div><p className="text-center text-xs text-gray-500 mt-8">© {new Date().getFullYear()} Hotel Palace Serra Verde Imperial - Sistema de Gestão.</p>
             </div>
         </div>
     );
@@ -1193,6 +1150,11 @@ const useAppLogic = () => {
   });
 
   const handleLogin = (login: string, pass: string): boolean => {
+    // Login Dione Adicionado
+    if (login.toLowerCase() === 'dione' && pass === '12345678') {
+        setLoggedInUser('Dione');
+        return true;
+    }
     // Mantendo credenciais originais para compatibilidade
     if ((login === 'Larissa' && pass === 'Knupp24') || (login === 'Mara' && pass === '@me19591959') || (login === 'Admin' && pass === 'admin')) {
         setLoggedInUser(login);
@@ -1280,7 +1242,7 @@ const MainAppLayout: React.FC = () => {
                         <Bars3Icon />
                     </button>
                     <BuildingIcon />
-                    <h1 className="text-xl md:text-2xl font-semibold">Hotel Palace - Canal de vendas</h1>
+                    <h1 className="text-xl md:text-2xl font-semibold">Hotel Palace Serra Verde Imperial</h1>
                 </div>
                 <div className="flex items-center gap-4">
                     <span className="text-sm hidden md:inline">Olá, <strong>{loggedInUser}</strong></span>
@@ -1310,7 +1272,7 @@ const MainAppLayout: React.FC = () => {
                 </aside>
                 <main className="flex-1 overflow-y-auto">{renderView()}</main>
             </div>
-            <footer className={`p-4 text-center text-sm ${isDarkMode ? 'bg-gray-800/50 border-t border-gray-700 text-gray-400' : 'bg-gray-100 border-t border-gray-200 text-gray-500'}`}>© {new Date().getFullYear()} Hotel Palace - Canal de vendas - Sistema de Gestão.</footer>
+            <footer className={`p-4 text-center text-sm ${isDarkMode ? 'bg-gray-800/50 border-t border-gray-700 text-gray-400' : 'bg-gray-100 border-t border-gray-200 text-gray-500'}`}>© {new Date().getFullYear()} Hotel Palace Serra Verde Imperial - Sistema de Gestão.</footer>
         </div>
     );
 };
