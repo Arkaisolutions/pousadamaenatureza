@@ -115,7 +115,7 @@ const TrashIcon = () => (
 );
 const Cog6ToothIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257-1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995s.145.755.438.995l1.003.827c.424.35.534.954.26 1.431l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.075.124a6.57 6.57 0 01-.26.127c-.332.183-.582.495-.645.87l-.213 1.281c-.09.542-.56.94-1.11-.94h-2.593c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313.686-.645-.87-.074-.04-.147-.083-.22-.127-.324.196-.72.257-1.075.124l-1.217.456a1.125 1.125 0 01-1.37-.49l-1.296-2.247a1.125 1.125 0 01.26-1.431l1.003-.827c.293-.24.438.613-.438.995s-.145-.755-.438-.995l-1.003-.827a1.125 1.125 0 01-.26-1.431l1.296-2.247a1.125 1.125 0 011.37.49l1.217.456c.355.133.75.072 1.075.124.074-.04.147-.083.22-.127.332-.183-.582-.495-.645-.87l.213-1.281z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257-1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995s.145.755.438.995l1.003.827c.424.35.534.954.26 1.431l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.075.124a6.57 6.57 0 01-.22.127c-.332.183-.582.495-.645.87l-.213 1.281c-.09.542-.56.94-1.11-.94h-2.593c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313.686-.645-.87-.074-.04-.147-.083-.22-.127-.324.196-.72.257-1.075.124l-1.217.456a1.125 1.125 0 01-1.37-.49l-1.296-2.247a1.125 1.125 0 01.26-1.431l1.003-.827c.293-.24.438.613-.438.995s-.145-.755-.438-.995l-1.003-.827a1.125 1.125 0 01-.26-1.431l1.296-2.247a1.125 1.125 0 011.37.49l1.217.456c.355.133.75.072 1.075.124.074-.04.147-.083.22-.127.332-.183-.582-.495-.645-.87l.213-1.281z" />
       <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
     </svg>
 );
@@ -126,7 +126,7 @@ const ArrowLeftOnRectangleIcon = () => (
 );
 const BanknotesIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414-.336.75-.75.75h-.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5m3-3l-3-3m0 0l-3 3m3-3v6m-9 3h2.25a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75H5.25a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75m3-3h2.25a.75.75 0 00.75-.75V15a.75.75 0 00-.75.75H8.25a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75m3-3h2.25a.75.75 0 00.75-.75V15a.75.75 0 00-.75.75h-2.25a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75M15 12h-3v-3h3v3z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414-.336.75-.75.75h-.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5m3-3l-3-3m0 0l-3 3m3-3v6m-9 3h2.25a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75H5.25a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75m3-3h2.25a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75H8.25a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75m3-3h2.25a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75h-2.25a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75M15 12h-3v-3h3v3z" />
     </svg>
 );
 const ArrowTrendingDownIcon = () => (
@@ -294,6 +294,10 @@ interface AppContextType {
     costs: Cost[];
     contacts: Contact[];
     loggedInUser: string | null;
+    apiBaseUrl: string;
+    setApiBaseUrl: React.Dispatch<React.SetStateAction<string>>;
+    apiKey: string;
+    setApiKey: React.Dispatch<React.SetStateAction<string>>;
     handleAddReservation: (res: NewReservationData) => void;
     handleUpdateSuiteStatus: (suiteId: number, newStatusData: Partial<SuiteStatus>) => void;
     handleUpdateContact: (updatedContact: Contact) => void;
@@ -1046,13 +1050,39 @@ const FinancialPage: React.FC = () => {
 
 // -------------------- Configurações & Login --------------------
 const SettingsPage: React.FC = () => {
-    const { loggedInUser } = useAppContext();
+    const { loggedInUser, apiBaseUrl, setApiBaseUrl, apiKey, setApiKey } = useAppContext();
     return (
         <div className="p-4 md:p-8 space-y-8">
             <PageHeader title="Configurações" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <Section title="Acesso e Segurança"><div className="space-y-4"><p>Você está logado como: <strong className="text-hotel-blue-dark dark:text-hotel-blue-light">{loggedInUser}</strong></p><h4 className="text-lg font-semibold pt-4 border-t border-gray-200 dark:border-gray-700">Gerenciamento de Usuários</h4><p className="text-sm text-gray-500">Funcionalidade a ser implementada.</p><button disabled className="mt-2 px-4 py-2 text-sm font-semibold bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed">Adicionar Novo Usuário</button></div></Section>
-                <Section title="Outras Configurações"><p className="text-sm text-gray-500">Espaço para futuras configurações do sistema, como integrações, preferências de notificação, etc.</p><p className="text-sm text-gray-500 mt-4">Funcionalidade a ser implementada.</p></Section>
+                <Section title="Integração de API (Backend / N8N)">
+                    <div className="space-y-4">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Configure a URL da API onde os dados serão salvos. O N8N deve interagir com este mesmo endpoint.</p>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">URL Base da API</label>
+                            <input 
+                                type="text" 
+                                value={apiBaseUrl} 
+                                onChange={(e) => setApiBaseUrl(e.target.value)} 
+                                placeholder="https://sua-api.com/api"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-white text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Chave de API (Opcional)</label>
+                            <input 
+                                type="password" 
+                                value={apiKey} 
+                                onChange={(e) => setApiKey(e.target.value)} 
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-white text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                            />
+                        </div>
+                        <p className="text-xs text-blue-600 dark:text-blue-400 mt-2">
+                            * Se configurado, o sistema tentará sincronizar dados com esta URL.
+                        </p>
+                    </div>
+                </Section>
             </div>
         </div>
     );
@@ -1107,6 +1137,8 @@ const useAppLogic = () => {
   const [suiteStatuses, setSuiteStatuses] = useState<SuiteStatus[]>(initialSuiteStatuses);
   const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
   const [costs, setCosts] = useState<Cost[]>(initialCosts);
+  const [apiBaseUrl, setApiBaseUrl] = useState('');
+  const [apiKey, setApiKey] = useState('');
 
   const [contacts, setContacts] = useState<Contact[]>(() => {
     const contactMap = new Map<string, Contact>();
@@ -1123,6 +1155,34 @@ const useAppLogic = () => {
     });
     return Array.from(contactMap.values());
   });
+
+  // Effect to Poll API Data if URL is present
+  useEffect(() => {
+    if (!apiBaseUrl) return;
+
+    const fetchData = async () => {
+        try {
+            const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+            if (apiKey) headers['Authorization'] = `Bearer ${apiKey}`;
+
+            const res = await fetch(`${apiBaseUrl}/reservations`, { headers });
+            if (res.ok) {
+                const data = await res.json();
+                // Assuming API returns array of reservations
+                if (Array.isArray(data)) {
+                    setReservations(data);
+                }
+            }
+        } catch (error) {
+            console.error("Erro ao buscar dados da API:", error);
+        }
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 60000); // Poll every minute
+    return () => clearInterval(interval);
+  }, [apiBaseUrl, apiKey]);
+
 
   useEffect(() => {
     // Closes the sidebar when resizing to a desktop view to prevent UI inconsistencies.
@@ -1164,13 +1224,50 @@ const useAppLogic = () => {
   };
   const handleLogout = () => setLoggedInUser(null);
   
-  const handleAddReservation = (newResData: NewReservationData) => {
+  const handleAddReservation = async (newResData: NewReservationData) => {
     const checkInDate = new Date(newResData.checkIn);
     const checkOutDate = new Date(newResData.checkOut);
     const diffTime = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
     const diffDays = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24))); 
     const newReservation: Reservation = { ...newResData, id: Date.now(), numberOfNights: diffDays, amountPending: newResData.totalRevenue - newResData.amountPaid, downPayment: newResData.amountPaid > 0 };
+    
+    // Update Local State immediately for responsiveness
     setReservations(prev => [...prev, newReservation]);
+
+    // Update Contact Logic (Local)
+    setContacts(prev => {
+        const exists = prev.some(c => 
+            c.name.trim().toLowerCase() === newResData.guestName.trim().toLowerCase() || 
+            (newResData.contact && (c.phone === newResData.contact || c.email === newResData.contact))
+        );
+        if (!exists) {
+            return [...prev, {
+                id: Date.now() + 1,
+                name: newResData.guestName,
+                phone: newResData.contact, // Simplificado
+                status: 'Hóspede',
+                notes: 'Criado via Reserva',
+                createdAt: new Date().toISOString(),
+                lastUpdate: new Date().toISOString()
+            }];
+        }
+        return prev;
+    });
+
+    // API Sync if configured
+    if (apiBaseUrl) {
+        try {
+            const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+            if (apiKey) headers['Authorization'] = `Bearer ${apiKey}`;
+            await fetch(`${apiBaseUrl}/reservations`, {
+                method: 'POST',
+                headers,
+                body: JSON.stringify(newReservation)
+            });
+        } catch (e) {
+            console.error("Failed to sync reservation to API", e);
+        }
+    }
   };
   
   const handleUpdateSuiteStatus = (suiteId: number, newStatusData: Partial<SuiteStatus>) => {
@@ -1202,6 +1299,7 @@ const useAppLogic = () => {
     costs, contacts, loggedInUser, handleLogin, handleLogout, handleAddReservation,
     handleUpdateSuiteStatus, handleUpdateContact, handleAddContact, handleDeleteContact,
     handleAddCost, handleUpdateCost, handleDeleteCost,
+    apiBaseUrl, setApiBaseUrl, apiKey, setApiKey
   };
 };
 
