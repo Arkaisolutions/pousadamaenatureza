@@ -7,11 +7,9 @@ import './index.css';
 import React, { useState, useMemo, useEffect, createContext, useContext } from 'react';
 import { createRoot } from 'react-dom/client';
 
-
 // ============================================================================
 // 1. ÍCONES (SVG Components)
 // ============================================================================
-// Substituindo LeafIcon por BuildingIcon para tema de Hotel
 const BuildingIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -299,6 +297,7 @@ interface AppContextType {
     apiKey: string;
     setApiKey: React.Dispatch<React.SetStateAction<string>>;
     handleAddReservation: (res: NewReservationData) => void;
+    handleDeleteReservation: (id: number) => void;
     handleUpdateSuiteStatus: (suiteId: number, newStatusData: Partial<SuiteStatus>) => void;
     handleUpdateContact: (updatedContact: Contact) => void;
     handleAddContact: (newContact: Contact) => void;
@@ -578,7 +577,7 @@ const DashboardPage: React.FC = () => {
 
 // -------------------- Reservas --------------------
 const ReservationsTable: React.FC = () => {
-  const { reservations } = useAppContext();
+  const { reservations, handleDeleteReservation } = useAppContext();
   const getStatusBadge = (res: Reservation) => {
     if (res.status === 'Cancelada') return <span className="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">Cancelada</span>;
     if (res.amountPending <= 0) return <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">Pago</span>;
@@ -597,6 +596,7 @@ const ReservationsTable: React.FC = () => {
               <th scope="col" className="px-6 py-3">Canal</th>
               <th scope="col" className="px-6 py-3">Valor Total</th>
               <th scope="col" className="px-6 py-3">Status</th>
+              <th scope="col" className="px-6 py-3">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -608,6 +608,15 @@ const ReservationsTable: React.FC = () => {
                 <td className="px-6 py-4">{res.bookingChannel}</td>
                 <td className="px-6 py-4 font-semibold">{formatCurrency(res.totalRevenue)}</td>
                 <td className="px-6 py-4">{getStatusBadge(res)}</td>
+                <td className="px-6 py-4">
+                    <button 
+                        onClick={() => { if(confirm('Tem certeza que deseja excluir esta reserva permanentemente?')) handleDeleteReservation(res.id); }} 
+                        className="p-1.5 text-red-600 hover:bg-red-100 dark:hover:bg-red-900/30 rounded transition-colors"
+                        title="Excluir Reserva"
+                    >
+                        <TrashIcon />
+                    </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -1269,6 +1278,20 @@ const useAppLogic = () => {
         }
     }
   };
+
+  const handleDeleteReservation = (id: number) => {
+    setReservations(prev => prev.filter(r => r.id !== id));
+    // If API is configured, also send delete request
+    if (apiBaseUrl) {
+        try {
+            const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+            if (apiKey) headers['Authorization'] = `Bearer ${apiKey}`;
+            fetch(`${apiBaseUrl}/reservations/${id}`, { method: 'DELETE', headers }).catch(e => console.error(e));
+        } catch (e) {
+             console.error("Failed to sync delete to API", e);
+        }
+    }
+  };
   
   const handleUpdateSuiteStatus = (suiteId: number, newStatusData: Partial<SuiteStatus>) => {
     setSuiteStatuses(prev => prev.map(s => s.id === suiteId ? { ...s, ...newStatusData } : s));
@@ -1296,7 +1319,7 @@ const useAppLogic = () => {
 
   return {
     isDarkMode, toggleDarkMode, currentView, setCurrentView, isSidebarOpen, setIsSidebarOpen, reservations, suiteStatuses,
-    costs, contacts, loggedInUser, handleLogin, handleLogout, handleAddReservation,
+    costs, contacts, loggedInUser, handleLogin, handleLogout, handleAddReservation, handleDeleteReservation,
     handleUpdateSuiteStatus, handleUpdateContact, handleAddContact, handleDeleteContact,
     handleAddCost, handleUpdateCost, handleDeleteCost,
     apiBaseUrl, setApiBaseUrl, apiKey, setApiKey
