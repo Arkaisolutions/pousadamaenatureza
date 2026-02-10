@@ -77,7 +77,7 @@ const ListBulletIcon = () => (
 );
 const Squares2x2Icon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 20 20" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
     </svg>
 );
 const BroomIcon = () => (
@@ -688,7 +688,8 @@ const MonthlyCalendarView: React.FC = () => {
 const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; }> = ({ isOpen, onClose }) => {
     const { handleAddReservation } = useAppContext();
     const [isSaving, setIsSaving] = useState(false);
-    const [newRes, setNewRes] = useState<NewReservationData>({
+    // Estado inicial com tipos flexíveis para permitir edição fluida de números
+    const [newRes, setNewRes] = useState<any>({
         guestName: '', contact: '', accommodation: 'HOTEL COMPLETO', bookingChannel: 'Reserva WhatsApp', description: '', adults: 2, children: 0,
         extraBed: false, breakfast: false, checkIn: '', checkOut: '', totalRevenue: 0, amountPaid: 0, observations: '', status: 'Confirmada',
     });
@@ -707,22 +708,33 @@ const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; }> =
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
-        let finalValue: string | number | boolean = value;
-        if (type === 'number') {
-            finalValue = parseFloat(value) || 0;
-        } else if (type === 'checkbox') {
+        let finalValue: any = value;
+        
+        if (type === 'checkbox') {
             finalValue = (e.target as HTMLInputElement).checked;
         }
-        setNewRes(prev => ({ ...prev, [name]: finalValue }));
+        // Mantemos como string durante a digitação para permitir "0", "" (vazio) e decimais parciais (ex: "10.")
+        
+        setNewRes((prev: any) => ({ ...prev, [name]: finalValue }));
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (isSaving) return;
         setIsSaving(true);
+        
+        // Converte para número apenas na hora de salvar
+        const submissionData: NewReservationData = {
+            ...newRes,
+            adults: newRes.adults === '' ? 0 : Number(newRes.adults),
+            children: newRes.children === '' ? 0 : Number(newRes.children),
+            totalRevenue: newRes.totalRevenue === '' ? 0 : Number(newRes.totalRevenue),
+            amountPaid: newRes.amountPaid === '' ? 0 : Number(newRes.amountPaid),
+        };
+
         // Simulate API call for better UX
         setTimeout(() => {
-            handleAddReservation(newRes);
+            handleAddReservation(submissionData);
             onClose();
         }, 500);
     };
@@ -737,14 +749,14 @@ const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; }> =
                         <div><label htmlFor="contact" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Contato</label><input type="text" name="contact" id="contact" value={newRes.contact} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
                         <div><label htmlFor="checkIn" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Check-in</label><input type="date" name="checkIn" id="checkIn" required value={newRes.checkIn} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
                         <div><label htmlFor="checkOut" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Check-out</label><input type="date" name="checkOut" id="checkOut" required value={newRes.checkOut} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
-                        <div><label htmlFor="adults" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Adultos</label><input type="number" name="adults" id="adults" min="0" required value={newRes.adults || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
-                        <div><label htmlFor="children" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Crianças</label><input type="number" name="children" id="children" min="0" required value={newRes.children || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
+                        <div><label htmlFor="adults" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Adultos</label><input type="number" name="adults" id="adults" min="0" required value={newRes.adults} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
+                        <div><label htmlFor="children" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Crianças</label><input type="number" name="children" id="children" min="0" required value={newRes.children} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
                         <div>
                             <label htmlFor="totalRevenue" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Valor Total (R$)</label>
-                            <input type="number" name="totalRevenue" id="totalRevenue" min="0" step="0.01" required value={newRes.totalRevenue || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/>
-                            {newRes.totalRevenue > 0 && <div className="text-xs text-blue-600 dark:text-blue-400 mt-1 font-semibold">Comissão Agência (20%): {formatCurrency(newRes.totalRevenue * 0.2)}</div>}
+                            <input type="number" name="totalRevenue" id="totalRevenue" min="0" step="0.01" required value={newRes.totalRevenue} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/>
+                            {Number(newRes.totalRevenue) > 0 && <div className="text-xs text-blue-600 dark:text-blue-400 mt-1 font-semibold">Comissão Agência (20%): {formatCurrency(Number(newRes.totalRevenue) * 0.2)}</div>}
                         </div>
-                        <div><label htmlFor="amountPaid" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Valor Pago (R$)</label><input type="number" name="amountPaid" id="amountPaid" min="0" step="0.01" required value={newRes.amountPaid || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
+                        <div><label htmlFor="amountPaid" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Valor Pago (R$)</label><input type="number" name="amountPaid" id="amountPaid" min="0" step="0.01" required value={newRes.amountPaid} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
                         <div><label htmlFor="bookingChannel" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Canal da Reserva</label><input type="text" name="bookingChannel" id="bookingChannel" value={newRes.bookingChannel} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
                         <div><label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label><select name="status" id="status" value={newRes.status} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"><option>Confirmada</option><option>Cancelada</option><option>Pendente</option></select></div>
                     </div>
