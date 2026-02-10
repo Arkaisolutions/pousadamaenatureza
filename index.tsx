@@ -4,7 +4,7 @@
  */
 
 import './index.css';
-import React, { useState, useMemo, useEffect, createContext, useContext } from 'react';
+import React, { useState, useMemo, useEffect, createContext, useContext, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 
 // ============================================================================
@@ -113,7 +113,7 @@ const TrashIcon = () => (
 );
 const Cog6ToothIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257-1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995s.145.755.438.995l1.003.827c.424.35.534.954.26 1.431l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.075.124a6.57 6.57 0 01-.22.127c-.332.183-.582.495-.645.87l-.213 1.281c-.09.542-.56.94-1.11-.94h-2.593c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313.686-.645-.87-.074-.04-.147-.083-.22-.127-.324.196-.72.257-1.075.124l-1.217.456a1.125 1.125 0 01-1.37-.49l-1.296-2.247a1.125 1.125 0 01.26-1.431l1.003-.827c.293-.24.438.613-.438.995s-.145-.755-.438-.995l-1.003-.827a1.125 1.125 0 01-.26-1.431l1.296-2.247a1.125 1.125 0 011.37.49l1.217.456c.355.133.75.072 1.075.124.074-.04.147-.083.22-.127.332-.183-.582-.495-.645-.87l.213-1.281z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257-1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995s.145.755.438.995l1.003.827c.424.35.534.954.26 1.431l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.075.124a6.57 6.57 0 01-.22.127c-.332.183-.582.495-.645.87l-.213-1.281c-.09.542-.56.94-1.11-.94h-2.593c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313.686-.645-.87-.074-.04-.147-.083-.22-.127-.324.196-.72.257-1.075.124l-1.217.456a1.125 1.125 0 01-1.37-.49l-1.296-2.247a1.125 1.125 0 01.26-1.431l1.003-.827c.293-.24.438.613-.438.995s-.145-.755-.438-.995l-1.003-.827a1.125 1.125 0 01-.26-1.431l1.296-2.247a1.125 1.125 0 011.37.49l1.217.456c.355.133.75.072 1.075.124.074-.04.147-.083.22-.127.332-.183-.582-.495-.645-.87l.213-1.281z" />
       <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
     </svg>
 );
@@ -146,6 +146,16 @@ const ScaleIcon = () => (
 const Bars3Icon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+    </svg>
+);
+const CloudIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+    </svg>
+);
+const CloudSlashIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 3l18 18M9.75 9.75a3 3 0 004.5 4.5m-6.75-2.25a5.25 5.25 0 017.42-7.42m2.81 2.81a3 3 0 013.77 3.86l-1.5 1.5M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 012.33-1.463M18 19.5h-9" />
     </svg>
 );
 
@@ -219,6 +229,8 @@ type Cost = {
 };
 
 type View = 'dashboard' | 'reservations' | 'financial' | 'contacts' | 'governance' | 'settings';
+
+type SyncStatus = 'connected' | 'offline' | 'syncing' | 'error';
 
 // ============================================================================
 // 3. FUNÇÕES UTILITÁRIAS (Utility Functions)
@@ -307,6 +319,10 @@ interface AppContextType {
     handleDeleteCost: (costId: number) => void;
     handleLogin: (login: string, pass: string) => boolean;
     handleLogout: () => void;
+    handleExportData: () => void;
+    handleImportData: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    syncStatus: SyncStatus;
+    forceSync: () => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -767,331 +783,57 @@ const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; }> =
     );
 };
 
-const ReservationsPage: React.FC = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [viewMode, setViewMode] = useState<'list' | 'calendar'>('list');
-    return (
-        <div className="p-4 md:p-8 space-y-8">
-            <PageHeader title="Controle de Reservas">
-                 <div className="flex items-center bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
-                    <button onClick={() => setViewMode('list')} className={`p-2 rounded-md transition-colors ${viewMode === 'list' ? 'bg-hotel-blue text-white shadow' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`} title="Ver como Lista"><ListBulletIcon /></button>
-                    <button onClick={() => setViewMode('calendar')} className={`p-2 rounded-md transition-colors ${viewMode === 'calendar' ? 'bg-hotel-blue text-white shadow' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`} title="Ver como Calendário"><Squares2x2Icon /></button>
-                </div>
-                <button onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 px-4 py-2 bg-hotel-blue text-white font-semibold rounded-lg shadow-md hover:bg-hotel-blue-dark transition-colors"><svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" /></svg>Adicionar Reserva</button>
-            </PageHeader>
-            {viewMode === 'list' ? <ReservationsTable /> : <MonthlyCalendarView />}
-            <AddReservationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-        </div>
-    );
-};
-
-// -------------------- Contatos --------------------
-const EditContactModal: React.FC<{isOpen: boolean; onClose: () => void; onSave: (contact: Contact) => void; contact: Contact | null; }> = ({ isOpen, onClose, onSave, contact }) => {
-    const [formData, setFormData] = useState<Partial<Contact>>(contact || { status: 'Novo', name: '', createdAt: new Date().toISOString() });
-    useEffect(() => { setFormData(contact || { status: 'Novo', name: '', createdAt: new Date().toISOString() }); }, [contact, isOpen]);
-    if (!isOpen) return null;
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => { setFormData(prev => ({ ...prev, [e.target.name]: e.target.value })); };
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        onSave({ ...formData, id: contact?.id || Date.now(), lastUpdate: new Date().toISOString() } as Contact);
-        onClose();
-    };
-    return (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
-                <header className="flex items-center justify-between p-4 border-b dark:border-gray-700"><h3 className="text-xl font-bold text-hotel-blue-dark dark:text-hotel-blue-light">{contact ? 'Editar Contato' : 'Adicionar Novo Contato'}</h3><button onClick={onClose} className="p-1 rounded-full text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"><CloseIcon /></button></header>
-                <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div><label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Nome</label><input type="text" name="name" id="name" required value={formData.name || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
-                        <div><label htmlFor="company" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Empresa</label><input type="text" name="company" id="company" value={formData.company || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
-                        <div><label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label><input type="email" name="email" id="email" value={formData.email || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
-                        <div><label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Telefone</label><input type="tel" name="phone" id="phone" value={formData.phone || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
-                        <div><label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Localização</label><input type="text" name="location" id="location" value={formData.location || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
-                        <div><label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label><select name="status" id="status" value={formData.status} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white">{CONTACT_STATUSES.map(s => <option key={s} value={s}>{s}</option>)}</select></div>
-                        <div className="md:col-span-2"><label htmlFor="notes" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Notas</label><textarea name="notes" id="notes" rows={3} value={formData.notes || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
-                    </div>
-                    <footer className="flex items-center justify-end gap-4 pt-4 border-t dark:border-gray-700"><button type="button" onClick={onClose} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 transition-colors">Cancelar</button><button type="submit" className="px-4 py-2 bg-hotel-blue text-white font-semibold rounded-lg shadow-md hover:bg-hotel-blue-dark transition-colors">Salvar Contato</button></footer>
-                </form>
-            </div>
-        </div>
-    );
-};
-
-const ContactCard: React.FC<{contact: Contact; onEdit: (contact: Contact) => void; onDelete: (contactId: number) => void;}> = ({ contact, onEdit, onDelete }) => {
-    const handleDragStart = (e: React.DragEvent<HTMLDivElement>, contactId: number) => { e.dataTransfer.setData('contactId', String(contactId)); e.currentTarget.style.opacity = '0.4'; };
-    const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => { e.currentTarget.style.opacity = '1'; };
-    return (
-        <div draggable onDragStart={(e) => handleDragStart(e, contact.id)} onDragEnd={handleDragEnd} className="p-3 mb-3 bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 cursor-grab active:cursor-grabbing">
-            <div className="flex justify-between items-start">
-                <div><p className="font-bold text-sm text-hotel-blue-dark dark:text-hotel-blue-light">{contact.name}</p><p className="text-xs text-gray-500 dark:text-gray-400">{contact.company || 'Sem empresa'}</p></div>
-                <div className="flex gap-1 flex-shrink-0"><button onClick={() => onEdit(contact)} className="p-1 text-blue-600 hover:bg-blue-100 dark:hover:bg-gray-600 rounded-full"><PencilIcon /></button><button onClick={() => confirm(`Tem certeza que deseja excluir ${contact.name}?`) && onDelete(contact.id)} className="p-1 text-red-600 hover:bg-red-100 dark:hover:bg-gray-600 rounded-full"><TrashIcon /></button></div>
-            </div>
-        </div>
-    );
-};
-
-const KanbanColumn: React.FC<{title: ContactStatus; contacts: Contact[]; onDrop: (contactId: number, status: ContactStatus) => void; onEdit: (contact: Contact) => void; onDelete: (contactId: number) => void;}> = ({ title, contacts, onDrop, onEdit, onDelete }) => {
-    const [isOver, setIsOver] = useState(false);
-    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => { e.preventDefault(); setIsOver(true); };
-    const handleDragLeave = () => setIsOver(false);
-    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault(); setIsOver(false);
-        const contactId = Number(e.dataTransfer.getData('contactId'));
-        if (contactId) onDrop(contactId, title);
-    };
-    return (
-        <div className="flex-shrink-0 w-72 bg-gray-100 dark:bg-gray-800/80 rounded-xl">
-            <h4 className="p-4 text-sm font-bold uppercase text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center"><span>{title}</span><span className="text-xs font-semibold bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded-full">{contacts.length}</span></h4>
-            <div onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop} className={`p-2 min-h-[200px] h-full transition-colors duration-300 ${isOver ? 'bg-hotel-blue-light/30' : ''}`}>
-                {contacts.map(contact => <ContactCard key={contact.id} contact={contact} onEdit={onEdit} onDelete={onDelete}/>)}
-            </div>
-        </div>
-    );
-};
-
-const KanbanView: React.FC<{contacts: Contact[]; onEdit: (contact: Contact) => void;}> = ({ contacts, onEdit }) => {
-    const { handleUpdateContact, handleDeleteContact } = useAppContext();
-    const handleDropOnColumn = (contactId: number, newStatus: ContactStatus) => {
-        const contactToUpdate = contacts.find(c => c.id === contactId);
-        if (contactToUpdate && contactToUpdate.status !== newStatus) {
-            handleUpdateContact({ ...contactToUpdate, status: newStatus, lastUpdate: new Date().toISOString() });
-        }
-    };
-    return (
-        <div className="flex gap-4 p-1 overflow-x-auto">
-            {CONTACT_STATUSES.map(status => (
-                <KanbanColumn key={status} title={status} contacts={contacts.filter(c => c.status === status)} onDrop={handleDropOnColumn} onEdit={onEdit} onDelete={handleDeleteContact}/>
-            ))}
-        </div>
-    );
-};
-
-const ContactsPage: React.FC = () => {
-    const { contacts, handleUpdateContact, handleAddContact, handleDeleteContact } = useAppContext();
-    const [searchTerm, setSearchTerm] = useState('');
-    const [statusFilter, setStatusFilter] = useState('Todos');
-    const [editingContact, setEditingContact] = useState<Contact | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [viewMode, setViewMode] = useState<'list' | 'kanban'>('list');
-
-    const filteredContacts = useMemo(() => {
-        return contacts.filter(contact => 
-            (searchTerm === '' || Object.values(contact).some(value => String(value).toLowerCase().includes(searchTerm.toLowerCase()))) &&
-            (statusFilter === 'Todos' || contact.status === statusFilter)
-        ).sort((a, b) => new Date(b.lastUpdate).getTime() - new Date(a.lastUpdate).getTime());
-    }, [contacts, searchTerm, statusFilter]);
-
-    const handleEdit = (contact: Contact) => { setEditingContact(contact); setIsModalOpen(true); };
-    const handleAddNew = () => { setEditingContact(null); setIsModalOpen(true); };
-    const handleSave = (contact: Contact) => {
-        if (contact.id && contacts.some(c => c.id === contact.id)) handleUpdateContact(contact);
-        else handleAddContact(contact);
-        setIsModalOpen(false);
-    };
-    const handleStatusChange = (contactId: number, newStatus: ContactStatus) => {
-        const contactToUpdate = contacts.find(c => c.id === contactId);
-        if (contactToUpdate) handleUpdateContact({ ...contactToUpdate, status: newStatus, lastUpdate: new Date().toISOString() });
-    };
-
-    return (
-        <div className="p-4 md:p-8">
-            <PageHeader title="Gerenciamento de Contatos">
-                <div className="flex items-center gap-4">
-                     <div className="flex items-center bg-gray-100 dark:bg-gray-800 p-1 rounded-lg"><button onClick={() => setViewMode('list')} className={`p-2 rounded-md transition-colors ${viewMode === 'list' ? 'bg-hotel-blue text-white shadow' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`} title="Ver como Lista"><ListBulletIcon /></button><button onClick={() => setViewMode('kanban')} className={`p-2 rounded-md transition-colors ${viewMode === 'kanban' ? 'bg-hotel-blue text-white shadow' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`} title="Ver como Kanban"><Squares2x2Icon /></button></div>
-                    <button onClick={handleAddNew} className="flex items-center gap-2 px-4 py-2 bg-hotel-blue text-white font-semibold rounded-lg shadow-md hover:bg-hotel-blue-dark transition-colors">Adicionar Contato</button>
-                </div>
-            </PageHeader>
-            <Section title={viewMode === 'list' ? "Todos os Contatos" : "Quadro de Contatos"}>
-                <div className="flex flex-col md:flex-row gap-4 mb-4"><input type="text" placeholder="Buscar em todos os campos..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full px-3 py-2 text-sm rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-white text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/>
-                    {viewMode === 'list' && (<select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="w-full md:w-56 px-3 py-2 text-sm rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-white text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"><option value="Todos">Todos os Status</option>{CONTACT_STATUSES.map(s => <option key={s} value={s}>{s}</option>)}</select>)}
-                </div>
-                {viewMode === 'list' ? (
-                     <div className="overflow-x-auto">
-                        <table className="w-full text-sm text-left text-hotel-text dark:text-gray-300">
-                            <thead className="text-xs text-hotel-blue-dark dark:text-hotel-blue-light uppercase bg-gray-50 dark:bg-gray-700"><tr><th className="px-4 py-3">Nome</th><th className="px-4 py-3">Empresa</th><th className="px-4 py-3">Contato</th><th className="px-4 py-3">Status</th><th className="px-4 py-3">Localidade</th><th className="px-4 py-3">Última Atualização</th><th className="px-4 py-3">Ações</th></tr></thead>
-                            <tbody>{filteredContacts.map(contact => (<tr key={contact.id} className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"><td className="px-4 py-2 font-medium whitespace-nowrap">{contact.name}</td><td className="px-4 py-2 whitespace-nowrap">{contact.company || '--'}</td><td className="px-4 py-2 whitespace-nowrap"><div className="truncate max-w-xs" title={contact.email}>{contact.email || ''}</div><div className="truncate max-w-xs text-xs text-gray-500 dark:text-gray-400" title={contact.phone}>{contact.phone || ''}</div></td><td className="px-4 py-2"><select value={contact.status} onChange={e => handleStatusChange(contact.id, e.target.value as ContactStatus)} className="w-full text-xs p-1 rounded-md border-gray-300 focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-600 dark:border-gray-500 dark:text-white" onClick={(e) => e.stopPropagation()}>{CONTACT_STATUSES.map(s => <option key={s} value={s}>{s}</option>)}</select></td><td className="px-4 py-2 whitespace-nowrap">{contact.location || '--'}</td><td className="px-4 py-2 whitespace-nowrap">{formatDate(contact.lastUpdate)}</td><td className="px-4 py-2"><div className="flex gap-2"><button onClick={() => handleEdit(contact)} className="p-1.5 text-blue-600 hover:bg-blue-100 dark:hover:bg-gray-700 rounded"><PencilIcon /></button><button onClick={() => confirm(`Tem certeza que deseja excluir ${contact.name}?`) && handleDeleteContact(contact.id)} className="p-1.5 text-red-600 hover:bg-red-100 dark:hover:bg-gray-700 rounded"><TrashIcon /></button></div></td></tr>))}</tbody>
-                        </table>
-                        {filteredContacts.length === 0 && <p className="text-center text-gray-500 py-8">Nenhum contato encontrado.</p>}
-                    </div>
-                ) : (<KanbanView contacts={filteredContacts} onEdit={handleEdit} />)}
-            </Section>
-            <EditContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} contact={editingContact} onSave={handleSave}/>
-        </div>
-    );
-};
-
-// -------------------- Governança --------------------
-const SuiteCard: React.FC<{ suite: SuiteStatus; onClick: () => void }> = ({ suite, onClick }) => {
-    const statusConfig = { clean: { label: 'Limpo', icon: <CheckCircleIcon />, color: 'border-green-500 bg-green-50 dark:bg-green-900/20', textColor: 'text-green-600 dark:text-green-300' }, dirty: { label: 'Limpeza Necessária', icon: <ExclamationTriangleIcon />, color: 'border-orange-500 bg-orange-50 dark:bg-orange-900/20', textColor: 'text-orange-600 dark:text-orange-300' }, occupied: { label: 'Ocupado', icon: <BedIcon />, color: 'border-blue-500 bg-blue-50 dark:bg-blue-900/20', textColor: 'text-blue-600 dark:text-blue-300' }, maintenance: { label: 'Manutenção', icon: <WrenchScrewdriverIcon />, color: 'border-red-500 bg-red-50 dark:bg-red-900/20', textColor: 'text-red-600 dark:text-red-300' } };
-    const config = statusConfig[suite.status];
-    return (
-        <button onClick={onClick} disabled={suite.status === 'occupied'} className={`p-4 rounded-xl shadow-lg flex flex-col items-center justify-center text-center transition-all duration-300 border-2 ${config.color} ${suite.status !== 'occupied' ? 'hover:shadow-xl hover:scale-105' : 'cursor-not-allowed opacity-80'}`}>
-            <h4 className="text-xl font-bold text-gray-800 dark:text-gray-100">{suite.name}</h4>
-            <div className={`my-4 ${config.textColor}`}>{config.icon}</div>
-            <p className={`font-semibold ${config.textColor}`}>{config.label}</p>
-            {suite.status === 'occupied' && <div className="text-xs text-gray-500 dark:text-gray-400 mt-2"><p className="font-semibold truncate">{suite.guestName}</p><p>Saída: {suite.checkOutDate}</p></div>}
-            {suite.status === 'maintenance' && suite.maintenanceReason && <div className="text-xs text-gray-500 dark:text-gray-400 mt-2 italic truncate" title={suite.maintenanceReason}>Motivo: {suite.maintenanceReason}</div>}
-        </button>
-    );
-};
-
-const UpdateStatusModal: React.FC<{ isOpen: boolean, onClose: () => void, suite: SuiteStatus, onUpdate: (suiteId: number, newStatus: Partial<SuiteStatus>) => void }> = ({isOpen, onClose, suite, onUpdate}) => {
-    const [status, setStatus] = useState(suite.status);
-    const [reason, setReason] = useState(suite.maintenanceReason || '');
-    if (!isOpen) return null;
-    const handleSave = () => { onUpdate(suite.id, { status, maintenanceReason: status === 'maintenance' ? reason : undefined }); onClose(); };
-    return (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-md">
-                <header className="flex items-center justify-between p-4 border-b dark:border-gray-700"><h3 className="text-xl font-bold text-hotel-blue-dark dark:text-hotel-blue-light">Atualizar Status: {suite.name}</h3><button onClick={onClose} className="p-1 rounded-full text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"><CloseIcon /></button></header>
-                <div className="p-6 space-y-4">
-                    <div><label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Novo Status</label><select id="status" value={status} onChange={(e) => setStatus(e.target.value as SuiteStatusOptions)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-white text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"><option value="clean">Limpo</option><option value="dirty">Limpeza Necessária</option><option value="maintenance">Manutenção</option></select></div>
-                    {status === 'maintenance' && <div><label htmlFor="reason" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Motivo da Manutenção</label><input type="text" id="reason" value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Ex: Chuveiro quebrado" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-white text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>}
-                </div>
-                <footer className="flex items-center justify-end gap-4 p-4 bg-gray-50 dark:bg-gray-800/50 border-t dark:border-gray-700 rounded-b-xl"><button type="button" onClick={onClose} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 transition-colors">Cancelar</button><button onClick={handleSave} className="px-4 py-2 bg-hotel-blue text-white font-semibold rounded-lg shadow-md hover:bg-hotel-blue-dark transition-colors">Salvar Alterações</button></footer>
-            </div>
-        </div>
-    );
-};
-
-const HousekeepingPage: React.FC = () => {
-    const { suiteStatuses, reservations, handleUpdateSuiteStatus } = useAppContext();
-    const [selectedSuite, setSelectedSuite] = useState<SuiteStatus | null>(null);
-
-    const statusesWithReservationData = useMemo(() => {
-        const today = new Date(); today.setUTCHours(0, 0, 0, 0);
-        const activeReservationsBySuite = new Map<number, Reservation>();
-        reservations.forEach(res => {
-            if (res.status === 'Confirmada') {
-                const checkIn = new Date(res.checkIn); const checkOut = new Date(res.checkOut);
-                checkIn.setUTCHours(0, 0, 0, 0); checkOut.setUTCHours(0, 0, 0, 0);
-                if (today >= checkIn && today < checkOut) {
-                    let numSuites = 0;
-                    if(res.accommodation.toLowerCase().includes('hotel completo') || res.accommodation.toLowerCase().includes('pousada total')) numSuites = TOTAL_SUITES;
-                    else {
-                        const match = res.description.toLowerCase().match(/(\d+)\s*su[íi]tes?/);
-                        if (match && match[1]) numSuites = parseInt(match[1], 10);
-                        else if (res.accommodation.toLowerCase().includes('suíte') || res.description.toLowerCase().includes('suíte')) numSuites = 1;
-                    }
-                    for(let i=1; i <= numSuites; i++) {
-                        if (!activeReservationsBySuite.has(i)) activeReservationsBySuite.set(i, res);
-                    }
-                }
-            }
-        });
-        return suiteStatuses.map((suite): SuiteStatus => {
-            const activeReservation = activeReservationsBySuite.get(suite.id);
-            if (activeReservation) return { ...suite, status: 'occupied', guestName: activeReservation.guestName, checkOutDate: formatDate(activeReservation.checkOut) };
-            return suite;
-        });
-    }, [suiteStatuses, reservations]);
-
-    return (
-        <div className="p-4 md:p-8">
-            <PageHeader title="Governança e Status dos Apartamentos" />
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {statusesWithReservationData.map(suite => <SuiteCard key={suite.id} suite={suite} onClick={() => setSelectedSuite(suite)}/>)}
-            </div>
-            {selectedSuite && <UpdateStatusModal isOpen={!!selectedSuite} onClose={() => setSelectedSuite(null)} suite={selectedSuite} onUpdate={handleUpdateSuiteStatus}/>}
-        </div>
-    );
-};
-
-// -------------------- Financeiro --------------------
-const AddEditCostModal: React.FC<{isOpen: boolean; onClose: () => void; onSave: (cost: Omit<Cost, 'id'> | Cost) => void; cost: Cost | null; }> = ({ isOpen, onClose, onSave, cost }) => {
-    const [formData, setFormData] = useState<Partial<Cost>>({});
-    useEffect(() => { setFormData(cost || { description: '', type: 'Variável', category: 'Outros', amount: 0, date: formatDateForInput(new Date().toISOString()) }); }, [cost, isOpen]);
-    if (!isOpen) return null;
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value, type } = e.target;
-        let finalValue: string | number = value;
-        if (type === 'number') finalValue = parseFloat(value) || 0;
-        setFormData(prev => ({ ...prev, [name]: finalValue }));
-    };
-    const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); onSave({ ...cost, ...formData, id: cost?.id || Date.now() } as Cost); onClose(); };
-    return (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col">
-                <header className="flex items-center justify-between p-4 border-b dark:border-gray-700"><h3 className="text-xl font-bold text-hotel-blue-dark dark:text-hotel-blue-light">{cost ? 'Editar Custo' : 'Adicionar Novo Custo'}</h3><button onClick={onClose} className="p-1 rounded-full text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"><CloseIcon /></button></header>
-                <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-4">
-                    <div><label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Descrição</label><input type="text" name="description" id="description" required value={formData.description || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div><label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Valor (R$)</label><input type="number" name="amount" id="amount" required min="0" step="0.01" value={formData.amount || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
-                        <div><label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Data</label><input type="date" name="date" id="date" required value={formatDateForInput(formData.date || '')} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"/></div>
-                        <div><label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Categoria</label><select name="category" id="category" value={formData.category} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white">{COST_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}</select></div>
-                        <div><label htmlFor="type" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Tipo</label><select name="type" id="type" value={formData.type} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white">{COST_TYPES.map(t => <option key={t} value={t}>{t}</option>)}</select></div>
-                    </div>
-                    <footer className="flex items-center justify-end gap-4 pt-4 border-t dark:border-gray-700"><button type="button" onClick={onClose} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 transition-colors">Cancelar</button><button type="submit" className="px-4 py-2 bg-hotel-blue text-white font-semibold rounded-lg shadow-md hover:bg-hotel-blue-dark transition-colors">Salvar Custo</button></footer>
-                </form>
-            </div>
-        </div>
-    );
-};
-
-const CostsTable: React.FC<{costs: Cost[]; onEdit: (cost: Cost) => void; onDelete: (costId: number) => void;}> = ({ costs, onEdit, onDelete }) => {
-    return (
-        <div className="overflow-x-auto"><table className="w-full text-sm text-left text-hotel-text dark:text-gray-300"><thead className="text-xs text-hotel-blue-dark dark:text-hotel-blue-light uppercase bg-gray-50 dark:bg-gray-700"><tr><th className="px-4 py-3">Data</th><th className="px-4 py-3">Descrição</th><th className="px-4 py-3">Categoria</th><th className="px-4 py-3">Tipo</th><th className="px-4 py-3 text-right">Valor</th><th className="px-4 py-3">Ações</th></tr></thead><tbody>{costs.map(cost => (<tr key={cost.id} className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"><td className="px-4 py-2 whitespace-nowrap">{formatDate(cost.date)}</td><td className="px-4 py-2 font-medium">{cost.description}</td><td className="px-4 py-2 whitespace-nowrap">{cost.category}</td><td className="px-4 py-2 whitespace-nowrap">{cost.type}</td><td className="px-4 py-2 font-semibold text-right">{formatCurrency(cost.amount)}</td><td className="px-4 py-2"><div className="flex gap-2"><button onClick={() => onEdit(cost)} className="p-1.5 text-blue-600 hover:bg-blue-100 dark:hover:bg-gray-700 rounded"><PencilIcon /></button><button onClick={() => confirm(`Tem certeza que deseja excluir este custo?`) && onDelete(cost.id)} className="p-1.5 text-red-600 hover:bg-red-100 dark:hover:bg-gray-700 rounded"><TrashIcon /></button></div></td></tr>))}</tbody></table>{costs.length === 0 && <p className="text-center text-gray-500 py-8">Nenhum custo lançado para este período.</p>}</div>
-    );
-};
-
-const FinancialPage: React.FC = () => {
-    const { reservations: allReservations, costs: allCosts, handleAddCost, handleUpdateCost, handleDeleteCost } = useAppContext();
-    const [selectedYear, setSelectedYear] = useState<'all' | number>(new Date().getFullYear());
-    const [isCostModalOpen, setIsCostModalOpen] = useState(false);
-    const [editingCost, setEditingCost] = useState<Cost | null>(null);
-
-    const { years, costs, monthlyRevenue, totalRevenue, totalCosts, grossProfit, profitMargin, revenueByChannel } = useMemo(() => {
-        const yearSet = new Set([...allReservations.map(r => new Date(r.checkIn).getFullYear()), ...allCosts.map(c => new Date(c.date).getFullYear())]);
-        const years = ['all', ...Array.from(yearSet).sort((a,b) => b-a)];
-        const reservations = selectedYear === 'all' ? allReservations : allReservations.filter(r => new Date(r.checkIn).getFullYear() === selectedYear);
-        const costs = selectedYear === 'all' ? allCosts : allCosts.filter(c => new Date(c.date).getFullYear() === selectedYear);
-        const { totalRevenue, revenueByChannel } = getDashboardMetrics(reservations, selectedYear, allReservations);
-        const totalCosts = costs.reduce((acc, cost) => acc + cost.amount, 0);
-        const grossProfit = totalRevenue - totalCosts;
-        const profitMargin = totalRevenue > 0 ? (grossProfit / totalRevenue) * 100 : 0;
-        const monthlyRevenue = Array.from({ length: 12 }, (_, i) => ({ label: new Date(0, i).toLocaleString('pt-BR', { month: 'short' }).replace('.', ''), value: 0 }));
-        reservations.forEach(res => { if (res.status === 'Confirmada') monthlyRevenue[new Date(res.checkIn).getUTCMonth()].value += res.totalRevenue; });
-        return { years, costs, revenueByChannel, monthlyRevenue, totalRevenue, totalCosts, grossProfit, profitMargin };
-    }, [allReservations, allCosts, selectedYear]);
-    
-    const handleSaveCost = (costData: Omit<Cost, 'id'> | Cost) => { 'id' in costData ? handleUpdateCost(costData) : handleAddCost(costData); setIsCostModalOpen(false); };
-    const handleEditCost = (cost: Cost) => { setEditingCost(cost); setIsCostModalOpen(true); };
-    const handleAddNewCost = () => { setEditingCost(null); setIsCostModalOpen(true); };
-
-    return (
-        <div className="p-4 md:p-8 space-y-8">
-            <PageHeader title="Painel Financeiro"><div className="flex items-center bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">{years.map(year => (<button key={year} onClick={() => setSelectedYear(year as any)} className={`px-3 py-1 text-sm font-semibold rounded-md transition-colors ${selectedYear === year ? 'bg-hotel-blue text-white shadow' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`}>{year === 'all' ? 'Total' : year}</button>))}</div></PageHeader>
-            <Section title="Resumo de Lucratividade"><div className="grid grid-cols-2 md:grid-cols-4 gap-4"><KpiCard title="Receita Total" value={formatCurrency(totalRevenue)} icon={<DollarIcon />} colorClass="bg-blue-600" /><KpiCard title="Custos Totais" value={formatCurrency(totalCosts)} icon={<ArrowTrendingDownIcon />} colorClass="bg-red-600" /><KpiCard title="Lucro Bruto" value={formatCurrency(grossProfit)} icon={<ChartPieIcon />} colorClass="bg-green-600" /><KpiCard title="Margem de Lucro" value={`${profitMargin.toFixed(1)}%`} icon={<ScaleIcon />} colorClass="bg-purple-600" /></div></Section>
-            <Section title="Lançamentos de Custos"><div className="flex justify-end mb-4"><button onClick={handleAddNewCost} className="flex items-center gap-2 px-4 py-2 bg-hotel-blue text-white font-semibold rounded-lg shadow-md hover:bg-hotel-blue-dark transition-colors">Adicionar Custo</button></div><CostsTable costs={costs} onEdit={handleEditCost} onDelete={handleDeleteCost} /></Section>
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6"><div className="lg:col-span-3"><Section title="Receita Mensal (Faturamento Confirmado)"><VerticalBarChart data={monthlyRevenue} /></Section></div><div className="lg:col-span-2"><Section title="Receita por Canal de Reserva"><SimpleBarChart data={revenueByChannel} currency /></Section></div></div>
-            <AddEditCostModal isOpen={isCostModalOpen} onClose={() => setIsCostModalOpen(false)} cost={editingCost} onSave={handleSaveCost}/>
-        </div>
-    );
-};
-
 // -------------------- Configurações & Login --------------------
 const SettingsPage: React.FC = () => {
-    const { loggedInUser, apiBaseUrl, setApiBaseUrl, apiKey, setApiKey } = useAppContext();
+    const { loggedInUser, apiBaseUrl, setApiBaseUrl, apiKey, setApiKey, handleExportData, handleImportData, syncStatus, forceSync } = useAppContext();
     return (
         <div className="p-4 md:p-8 space-y-8">
             <PageHeader title="Configurações" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <Section title="Acesso e Segurança"><div className="space-y-4"><p>Você está logado como: <strong className="text-hotel-blue-dark dark:text-hotel-blue-light">{loggedInUser}</strong></p><h4 className="text-lg font-semibold pt-4 border-t border-gray-200 dark:border-gray-700">Gerenciamento de Usuários</h4><p className="text-sm text-gray-500">Funcionalidade a ser implementada.</p><button disabled className="mt-2 px-4 py-2 text-sm font-semibold bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed">Adicionar Novo Usuário</button></div></Section>
-                <Section title="Integração de API (Backend / N8N)">
+                <Section title="Backup e Exportação">
                     <div className="space-y-4">
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Configure a URL da API onde os dados serão salvos. O N8N deve interagir com este mesmo endpoint.</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                            Exporte os dados para enviar o relatório de comissões ou faça um backup.
+                        </p>
+                        <div className="flex flex-col gap-4">
+                            <button onClick={handleExportData} className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-hotel-blue text-white font-bold rounded-lg shadow hover:bg-hotel-blue-dark transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                                Exportar Backup (JSON)
+                            </button>
+                            
+                            <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Restaurar Dados (Importar)</label>
+                                <input 
+                                    type="file" 
+                                    accept=".json"
+                                    onChange={handleImportData}
+                                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-900/30 dark:file:text-blue-300"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </Section>
+                <Section title="Conexão com Servidor VPS (Postgres)">
+                    <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Configure a API para sincronizar Larissa e Dione.</p>
+                            <span className={`px-2 py-1 text-xs font-bold rounded uppercase ${syncStatus === 'connected' ? 'bg-green-100 text-green-800' : syncStatus === 'error' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}`}>
+                                {syncStatus === 'connected' ? 'Conectado' : syncStatus === 'error' ? 'Erro' : 'Offline'}
+                            </span>
+                        </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">URL Base da API</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">URL da API (VPS)</label>
                             <input 
                                 type="text" 
                                 value={apiBaseUrl} 
                                 onChange={(e) => setApiBaseUrl(e.target.value)} 
-                                placeholder="https://sua-api.com/api"
+                                placeholder="https://api.seuhotel.com.br"
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-white text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Chave de API (Opcional)</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Chave de Segurança (API Key)</label>
                             <input 
                                 type="password" 
                                 value={apiKey} 
@@ -1099,11 +841,265 @@ const SettingsPage: React.FC = () => {
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-blue focus:ring-hotel-blue bg-white text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                             />
                         </div>
-                        <p className="text-xs text-blue-600 dark:text-blue-400 mt-2">
-                            * Se configurado, o sistema tentará sincronizar dados com esta URL.
-                        </p>
+                        <button onClick={forceSync} className="mt-2 text-sm text-blue-600 hover:text-blue-800 underline">Testar Conexão e Sincronizar Agora</button>
+                        <div className="text-xs text-gray-500 bg-gray-50 dark:bg-gray-700/50 p-3 rounded mt-2">
+                            <strong>Instruções para TI:</strong><br/>
+                            Aponte para o backend que conecta no Postgres.<br/>
+                            Endpoints esperados: GET/POST em <code>/reservations</code>, <code>/costs</code>, etc.
+                        </div>
                     </div>
                 </Section>
+            </div>
+        </div>
+    );
+};
+
+const ReservationsPage: React.FC = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    return (
+        <div className="p-4 md:p-8 space-y-8">
+            <PageHeader title="Reservas">
+                <button onClick={() => setIsModalOpen(true)} className="px-4 py-2 bg-hotel-blue text-white rounded-lg hover:bg-hotel-blue-dark transition-colors flex items-center gap-2 shadow-md">
+                   <span className="text-lg leading-none">+</span> Nova Reserva
+                </button>
+            </PageHeader>
+            <div className="space-y-6">
+                <Section title="Calendário de Ocupação">
+                    <MonthlyCalendarView />
+                </Section>
+                <Section title="Lista de Reservas">
+                    <ReservationsTable />
+                </Section>
+            </div>
+            <AddReservationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        </div>
+    );
+};
+
+const FinancialPage: React.FC = () => {
+    const { costs, handleAddCost, handleDeleteCost } = useAppContext();
+    const [newCost, setNewCost] = useState({ description: '', category: 'Outros' as CostCategory, type: 'Variável' as CostType, amount: 0, date: new Date().toISOString().split('T')[0] });
+    
+    const totalExpenses = costs.reduce((acc, c) => acc + c.amount, 0);
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        handleAddCost(newCost);
+        setNewCost({ description: '', category: 'Outros', type: 'Variável', amount: 0, date: new Date().toISOString().split('T')[0] });
+    };
+
+    return (
+        <div className="p-4 md:p-8 space-y-8">
+            <PageHeader title="Financeiro" />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                 <div className="lg:col-span-1 space-y-6">
+                    <KpiCard title="Total Despesas" value={formatCurrency(totalExpenses)} icon={<DollarIcon />} colorClass="bg-red-600" />
+                    <Section title="Nova Despesa">
+                        <form onSubmit={handleSubmit} className="space-y-3">
+                            <div>
+                                <label className="text-xs font-semibold text-gray-500 uppercase">Descrição</label>
+                                <input type="text" className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" value={newCost.description} onChange={e => setNewCost({...newCost, description: e.target.value})} required />
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label className="text-xs font-semibold text-gray-500 uppercase">Categoria</label>
+                                    <select className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" value={newCost.category} onChange={e => setNewCost({...newCost, category: e.target.value as CostCategory})}>
+                                        {COST_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-xs font-semibold text-gray-500 uppercase">Tipo</label>
+                                    <select className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" value={newCost.type} onChange={e => setNewCost({...newCost, type: e.target.value as CostType})}>
+                                        {COST_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label className="text-xs font-semibold text-gray-500 uppercase">Valor</label>
+                                    <input type="number" step="0.01" className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" value={newCost.amount || ''} onChange={e => setNewCost({...newCost, amount: parseFloat(e.target.value)})} required />
+                                </div>
+                                <div>
+                                    <label className="text-xs font-semibold text-gray-500 uppercase">Data</label>
+                                    <input type="date" className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" value={newCost.date} onChange={e => setNewCost({...newCost, date: e.target.value})} required />
+                                </div>
+                            </div>
+                            <button type="submit" className="w-full bg-hotel-blue text-white p-2 rounded hover:bg-hotel-blue-dark font-semibold shadow">Adicionar Despesa</button>
+                        </form>
+                    </Section>
+                 </div>
+                 <div className="lg:col-span-2">
+                    <Section title="Histórico de Custos">
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th className="px-4 py-3">Data</th>
+                                        <th className="px-4 py-3">Descrição</th>
+                                        <th className="px-4 py-3">Categoria</th>
+                                        <th className="px-4 py-3">Valor</th>
+                                        <th className="px-4 py-3 text-right">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {costs.length === 0 ? <tr><td colSpan={5} className="text-center py-4">Nenhuma despesa registrada.</td></tr> :
+                                    costs.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map(cost => (
+                                        <tr key={cost.id} className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            <td className="px-4 py-3">{formatDate(cost.date)}</td>
+                                            <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">{cost.description}</td>
+                                            <td className="px-4 py-3"><span className="px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 dark:bg-gray-600">{cost.category}</span></td>
+                                            <td className="px-4 py-3 font-bold text-red-600 dark:text-red-400">{formatCurrency(cost.amount)}</td>
+                                            <td className="px-4 py-3 text-right">
+                                                <button onClick={() => { if(confirm('Excluir esta despesa?')) handleDeleteCost(cost.id); }} className="text-red-500 hover:text-red-700 p-1"><TrashIcon /></button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </Section>
+                 </div>
+            </div>
+        </div>
+    );
+};
+
+const ContactForm: React.FC<{onClose: () => void}> = ({onClose}) => {
+    const { handleAddContact } = useAppContext();
+    const [formData, setFormData] = useState<any>({ name: '', company: '', email: '', phone: '', status: 'Novo', location: '', notes: '' });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        handleAddContact({...formData, createdAt: new Date().toISOString(), lastUpdate: new Date().toISOString() });
+        onClose();
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg space-y-4 border dark:border-gray-600">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input name="name" placeholder="Nome do Contato *" required className="p-2 rounded border dark:bg-gray-700 dark:border-gray-600" onChange={handleChange} value={formData.name} />
+                <input name="company" placeholder="Empresa / Agência" className="p-2 rounded border dark:bg-gray-700 dark:border-gray-600" onChange={handleChange} value={formData.company} />
+                <input name="email" type="email" placeholder="Email" className="p-2 rounded border dark:bg-gray-700 dark:border-gray-600" onChange={handleChange} value={formData.email} />
+                <input name="phone" placeholder="Telefone / WhatsApp" className="p-2 rounded border dark:bg-gray-700 dark:border-gray-600" onChange={handleChange} value={formData.phone} />
+                <select name="status" className="p-2 rounded border dark:bg-gray-700 dark:border-gray-600" onChange={handleChange} value={formData.status}>
+                    {CONTACT_STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
+                </select>
+                <input name="location" placeholder="Cidade / Estado" className="p-2 rounded border dark:bg-gray-700 dark:border-gray-600" onChange={handleChange} value={formData.location} />
+            </div>
+            <textarea name="notes" placeholder="Observações importantes..." className="w-full p-2 rounded border dark:bg-gray-700 dark:border-gray-600" rows={3} onChange={handleChange} value={formData.notes}></textarea>
+            <div className="flex justify-end gap-3">
+                <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200 transition-colors">Cancelar</button>
+                <button type="submit" className="px-4 py-2 bg-hotel-blue text-white rounded hover:bg-hotel-blue-dark transition-colors font-semibold">Salvar Contato</button>
+            </div>
+        </form>
+    );
+};
+
+const ContactsPage: React.FC = () => {
+    const { contacts, handleDeleteContact } = useAppContext();
+    const [isFormOpen, setIsFormOpen] = useState(false);
+
+    return (
+        <div className="p-4 md:p-8 space-y-8">
+            <PageHeader title="Contatos / CRM">
+                 <button onClick={() => setIsFormOpen(!isFormOpen)} className="px-4 py-2 bg-hotel-blue text-white rounded-lg hover:bg-hotel-blue-dark transition-colors shadow">
+                    {isFormOpen ? 'Cancelar' : '+ Novo Contato'}
+                </button>
+            </PageHeader>
+            
+            {isFormOpen && (
+                <Section title="Adicionar Novo Contato">
+                     <ContactForm onClose={() => setIsFormOpen(false)} />
+                </Section>
+            )}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {contacts.map(contact => (
+                    <div key={contact.id} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 flex flex-col justify-between hover:shadow-lg transition-shadow">
+                        <div>
+                            <div className="flex justify-between items-start mb-2">
+                                <h4 className="font-bold text-lg text-hotel-blue-dark dark:text-hotel-blue-light truncate pr-2">{contact.name}</h4>
+                                <span className={`flex-shrink-0 px-2 py-0.5 text-xs rounded-full font-semibold ${contact.status === 'Novo' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>{contact.status}</span>
+                            </div>
+                            <p className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-4">{contact.company || 'Particular'}</p>
+                            <div className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+                                <div className="flex items-center gap-2"><span className="w-4"><UsersIcon /></span> {contact.email || 'Sem email'}</div>
+                                <div className="flex items-center gap-2"><span className="w-4"><ListBulletIcon /></span> {contact.phone || 'Sem telefone'}</div>
+                                {contact.location && <div className="flex items-center gap-2"><span className="w-4"><HomeIcon /></span> {contact.location}</div>}
+                            </div>
+                            {contact.notes && <p className="mt-4 text-xs italic bg-gray-50 dark:bg-gray-700/50 p-2 rounded text-gray-600 dark:text-gray-300 line-clamp-3">{contact.notes}</p>}
+                        </div>
+                        <div className="mt-6 pt-4 border-t dark:border-gray-700 flex justify-end">
+                            <button onClick={() => { if(confirm('Excluir contato?')) handleDeleteContact(contact.id); }} className="text-red-500 hover:text-red-700 text-sm flex items-center gap-1 font-semibold px-2 py-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"><TrashIcon /> Excluir</button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+const HousekeepingPage: React.FC = () => {
+    const { suiteStatuses, handleUpdateSuiteStatus } = useAppContext();
+    
+    const getStatusColor = (status: string) => {
+        switch(status) {
+            case 'clean': return 'bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800';
+            case 'dirty': return 'bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800';
+            case 'occupied': return 'bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800';
+            case 'maintenance': return 'bg-amber-50 border-amber-200 dark:bg-amber-900/20 dark:border-amber-800';
+            default: return 'bg-gray-50 border-gray-200';
+        }
+    };
+    
+    const getStatusIcon = (status: string) => {
+        switch(status) {
+            case 'clean': return <div className="text-green-600 dark:text-green-400"><CheckCircleIcon /></div>;
+            case 'dirty': return <div className="text-red-600 dark:text-red-400"><BroomIcon /></div>;
+            case 'occupied': return <div className="text-blue-600 dark:text-blue-400"><BedIcon /></div>;
+            case 'maintenance': return <div className="text-amber-600 dark:text-amber-400"><WrenchScrewdriverIcon /></div>;
+            default: return null;
+        }
+    }
+
+    return (
+        <div className="p-4 md:p-8 space-y-8">
+            <PageHeader title="Governança & Housekeeping" />
+            
+            <div className="flex gap-4 mb-6 overflow-x-auto pb-2">
+                <div className="flex items-center gap-2 text-sm"><span className="w-3 h-3 rounded-full bg-green-500"></span> Limpo (Disponível)</div>
+                <div className="flex items-center gap-2 text-sm"><span className="w-3 h-3 rounded-full bg-red-500"></span> Sujo (Limpeza)</div>
+                <div className="flex items-center gap-2 text-sm"><span className="w-3 h-3 rounded-full bg-blue-500"></span> Ocupado</div>
+                <div className="flex items-center gap-2 text-sm"><span className="w-3 h-3 rounded-full bg-amber-500"></span> Manutenção</div>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                {suiteStatuses.map(suite => (
+                    <div key={suite.id} className={`p-4 rounded-xl border-2 ${getStatusColor(suite.status)} flex flex-col justify-between h-40 transition-all shadow-sm hover:shadow-md relative overflow-hidden group`}>
+                        <div className="flex justify-between items-start z-10">
+                            <h3 className="font-bold text-lg dark:text-gray-100">{suite.name}</h3>
+                            {getStatusIcon(suite.status)}
+                        </div>
+                        <div className="z-10 mt-auto">
+                             <label className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1 block">Status</label>
+                             <select 
+                                value={suite.status} 
+                                onChange={(e) => handleUpdateSuiteStatus(suite.id, { status: e.target.value as any })}
+                                className="w-full text-xs p-1.5 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:ring-1 focus:ring-hotel-blue cursor-pointer font-semibold shadow-sm"
+                             >
+                                <option value="clean">Limpo</option>
+                                <option value="dirty">Sujo</option>
+                                <option value="occupied">Ocupado</option>
+                                <option value="maintenance">Manutenção</option>
+                             </select>
+                        </div>
+                        <div className={`absolute -bottom-4 -right-4 w-20 h-20 rounded-full opacity-10 z-0 ${suite.status === 'clean' ? 'bg-green-500' : suite.status === 'dirty' ? 'bg-red-500' : suite.status === 'occupied' ? 'bg-blue-500' : 'bg-amber-500'}`}></div>
+                    </div>
+                ))}
             </div>
         </div>
     );
@@ -1146,196 +1142,291 @@ const LoginPage: React.FC<{ onLogin: (user: string, pass: string) => boolean, is
     );
 };
 
-
 // ============================================================================
-// 8. LÓGICA PRINCIPAL DA APLICAÇÃO (Main App Logic & Provider)
+// 8. LÓGICA DO APLICATIVO (App Logic Hook)
 // ============================================================================
-const useAppLogic = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [currentView, setCurrentView] = useState<View>('dashboard');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [reservations, setReservations] = useState<Reservation[]>(initialReservations);
-  const [suiteStatuses, setSuiteStatuses] = useState<SuiteStatus[]>(initialSuiteStatuses);
-  const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
-  const [costs, setCosts] = useState<Cost[]>(initialCosts);
-  const [apiBaseUrl, setApiBaseUrl] = useState('');
-  const [apiKey, setApiKey] = useState('');
 
-  const [contacts, setContacts] = useState<Contact[]>(() => {
-    const contactMap = new Map<string, Contact>();
-    initialContactsData.forEach(c => contactMap.set(`${c.name.toLowerCase()}|${(c.phone || c.email || '').toLowerCase()}`, c));
-    initialReservations.forEach(res => {
-        if (!res.guestName) return;
-        const key = `${res.guestName.toLowerCase()}|${(res.contact || '').toLowerCase()}`;
-        if (contactMap.has(key)) {
-            const existing = contactMap.get(key)!;
-            if (res.status === 'Confirmada') { existing.status = 'Hóspede'; existing.lastUpdate = res.checkIn > existing.lastUpdate ? res.checkIn : existing.lastUpdate; }
-        } else {
-            contactMap.set(key, { id: res.id + 1000, name: res.guestName, phone: res.contact, status: 'Hóspede', createdAt: res.checkIn, lastUpdate: res.checkIn, notes: res.observations });
-        }
-    });
-    return Array.from(contactMap.values());
-  });
+// Keys for LocalStorage
+const STORAGE_KEYS = {
+  RESERVATIONS: 'hotel_reservations',
+  SUITES: 'hotel_suite_statuses',
+  COSTS: 'hotel_costs',
+  CONTACTS: 'hotel_contacts',
+  THEME: 'hotel_dark_mode',
+  API_URL: 'hotel_api_url',
+  API_KEY: 'hotel_api_key'
+};
 
-  // Effect to Poll API Data if URL is present
-  useEffect(() => {
-    if (!apiBaseUrl) return;
-
-    const fetchData = async () => {
+const useAppLogic = (): AppContextType => {
+    // Helper to load from storage or use default
+    const loadState = <T,>(key: string, fallback: T): T => {
         try {
-            const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-            if (apiKey) headers['Authorization'] = `Bearer ${apiKey}`;
-
-            const res = await fetch(`${apiBaseUrl}/reservations`, { headers });
-            if (res.ok) {
-                const data = await res.json();
-                // Assuming API returns array of reservations
-                if (Array.isArray(data)) {
-                    setReservations(data);
-                }
-            }
-        } catch (error) {
-            console.error("Erro ao buscar dados da API:", error);
+            const saved = localStorage.getItem(key);
+            return saved ? JSON.parse(saved) : fallback;
+        } catch (e) {
+            console.error(`Error loading ${key}`, e);
+            return fallback;
         }
     };
 
-    fetchData();
-    const interval = setInterval(fetchData, 60000); // Poll every minute
-    return () => clearInterval(interval);
-  }, [apiBaseUrl, apiKey]);
-
-
-  useEffect(() => {
-    // Closes the sidebar when resizing to a desktop view to prevent UI inconsistencies.
-    const handleResize = () => {
-      if (window.innerWidth >= 768) { // Corresponds to Tailwind's 'md' breakpoint
-        setIsSidebarOpen(false);
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    // Locks the body scroll when the off-canvas menu is open on mobile.
-    if (isSidebarOpen) {
-      document.body.classList.add('overflow-hidden');
-    } else {
-      document.body.classList.remove('overflow-hidden');
-    }
-  }, [isSidebarOpen]);
-
-  const toggleDarkMode = () => setIsDarkMode(prev => {
-    document.documentElement.classList.toggle('dark', !prev);
-    return !prev;
-  });
-
-  const handleLogin = (login: string, pass: string): boolean => {
-    // Login Dione Adicionado
-    if (login.toLowerCase() === 'dione' && pass === '12345678') {
-        setLoggedInUser('Dione');
-        return true;
-    }
-    // Mantendo credenciais originais para compatibilidade
-    if ((login === 'Larissa' && pass === 'Knupp24') || (login === 'Mara' && pass === '@me19591959') || (login === 'Admin' && pass === 'admin')) {
-        setLoggedInUser(login);
-        return true;
-    }
-    return false;
-  };
-  const handleLogout = () => setLoggedInUser(null);
-  
-  const handleAddReservation = async (newResData: NewReservationData) => {
-    const checkInDate = new Date(newResData.checkIn);
-    const checkOutDate = new Date(newResData.checkOut);
-    const diffTime = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
-    const diffDays = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24))); 
-    const newReservation: Reservation = { ...newResData, id: Date.now(), numberOfNights: diffDays, amountPending: newResData.totalRevenue - newResData.amountPaid, downPayment: newResData.amountPaid > 0 };
+    const [isDarkMode, setIsDarkMode] = useState(() => loadState(STORAGE_KEYS.THEME, false));
+    const [currentView, setCurrentView] = useState<View>('dashboard');
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     
-    // Update Local State immediately for responsiveness
-    setReservations(prev => [...prev, newReservation]);
+    // Data states
+    const [reservations, setReservations] = useState<Reservation[]>(() => loadState(STORAGE_KEYS.RESERVATIONS, initialReservations));
+    const [suiteStatuses, setSuiteStatuses] = useState<SuiteStatus[]>(() => loadState(STORAGE_KEYS.SUITES, initialSuiteStatuses));
+    const [costs, setCosts] = useState<Cost[]>(() => loadState(STORAGE_KEYS.COSTS, initialCosts));
+    const [contacts, setContacts] = useState<Contact[]>(() => loadState(STORAGE_KEYS.CONTACTS, initialContactsData));
+    
+    const [loggedInUser, setLoggedInUser] = useState<string | null>(() => sessionStorage.getItem('hotel_user'));
+    
+    // API Configuration
+    const [apiBaseUrl, setApiBaseUrl] = useState(() => loadState(STORAGE_KEYS.API_URL, ''));
+    const [apiKey, setApiKey] = useState(() => loadState(STORAGE_KEYS.API_KEY, ''));
+    const [syncStatus, setSyncStatus] = useState<SyncStatus>('offline');
 
-    // Update Contact Logic (Local)
-    setContacts(prev => {
-        const exists = prev.some(c => 
-            c.name.trim().toLowerCase() === newResData.guestName.trim().toLowerCase() || 
-            (newResData.contact && (c.phone === newResData.contact || c.email === newResData.contact))
-        );
-        if (!exists) {
-            return [...prev, {
-                id: Date.now() + 1,
-                name: newResData.guestName,
-                phone: newResData.contact, // Simplificado
-                status: 'Hóspede',
-                notes: 'Criado via Reserva',
-                createdAt: new Date().toISOString(),
-                lastUpdate: new Date().toISOString()
-            }];
+    // --- GENERIC API HANDLER ---
+    const syncDataWithServer = useCallback(async () => {
+        if (!apiBaseUrl) {
+            setSyncStatus('offline');
+            return;
         }
-        return prev;
-    });
 
-    // API Sync if configured
-    if (apiBaseUrl) {
+        setSyncStatus('syncing');
         try {
             const headers: Record<string, string> = { 'Content-Type': 'application/json' };
             if (apiKey) headers['Authorization'] = `Bearer ${apiKey}`;
-            await fetch(`${apiBaseUrl}/reservations`, {
+
+            // Example: Parallel fetching (Simplified for this use case)
+            // In a real scenario, you might want to fetch only what changed or use specific endpoints
+            // This assumes endpoints: /reservations, /suites, /costs, /contacts exist on VPS
+            
+            // FETCHING (GET) - Simple poll strategy
+            try {
+                const resRes = await fetch(`${apiBaseUrl}/reservations`, { headers });
+                if(resRes.ok) { const data = await resRes.json(); if(Array.isArray(data)) setReservations(data); }
+                
+                const resCosts = await fetch(`${apiBaseUrl}/costs`, { headers });
+                if(resCosts.ok) { const data = await resCosts.json(); if(Array.isArray(data)) setCosts(data); }
+
+                // We update local status to match remote if successful
+                setSyncStatus('connected');
+            } catch (e) {
+                console.warn("API Fetch failed, using local data", e);
+                setSyncStatus('error');
+            }
+
+        } catch (error) {
+            console.error("Sync error:", error);
+            setSyncStatus('error');
+        }
+    }, [apiBaseUrl, apiKey]);
+
+    const pushDataToServer = async (endpoint: string, data: any) => {
+        if (!apiBaseUrl) return; // Offline mode
+        
+        try {
+            setSyncStatus('syncing');
+            const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+            if (apiKey) headers['Authorization'] = `Bearer ${apiKey}`;
+            
+            // Assuming the API accepts full array replacement for simplicity in this MVP
+            // or specific create/update endpoints. Here we try a generic "sync" POST
+            await fetch(`${apiBaseUrl}/${endpoint}`, {
                 method: 'POST',
                 headers,
-                body: JSON.stringify(newReservation)
+                body: JSON.stringify(data)
             });
+            setSyncStatus('connected');
         } catch (e) {
-            console.error("Failed to sync reservation to API", e);
+            console.error(`Failed to push ${endpoint}`, e);
+            setSyncStatus('error');
         }
-    }
-  };
-
-  const handleDeleteReservation = (id: number) => {
-    setReservations(prev => prev.filter(r => r.id !== id));
-    // If API is configured, also send delete request
-    if (apiBaseUrl) {
-        try {
-            const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-            if (apiKey) headers['Authorization'] = `Bearer ${apiKey}`;
-            fetch(`${apiBaseUrl}/reservations/${id}`, { method: 'DELETE', headers }).catch(e => console.error(e));
-        } catch (e) {
-             console.error("Failed to sync delete to API", e);
-        }
-    }
-  };
-  
-  const handleUpdateSuiteStatus = (suiteId: number, newStatusData: Partial<SuiteStatus>) => {
-    setSuiteStatuses(prev => prev.map(s => s.id === suiteId ? { ...s, ...newStatusData } : s));
-  };
-  const handleUpdateContact = (updatedContact: Contact) => setContacts(prev => prev.map(c => c.id === updatedContact.id ? updatedContact : c));
-  const handleAddContact = (newContact: Contact) => setContacts(prev => [...prev, { ...newContact, id: Math.max(...prev.map(c => c.id), 0) + 1 }]);
-  const handleDeleteContact = (contactId: number) => setContacts(prev => prev.filter(c => c.id !== contactId));
-  const handleAddCost = (newCostData: Omit<Cost, 'id'>) => setCosts(prev => [...prev, { ...newCostData, id: Date.now() }]);
-  const handleUpdateCost = (updatedCost: Cost) => setCosts(prev => prev.map(c => c.id === updatedCost.id ? updatedCost : c));
-  const handleDeleteCost = (costId: number) => setCosts(prev => prev.filter(c => c.id !== costId));
-
-  useEffect(() => {
-    document.body.className = 'bg-hotel-slate-light text-hotel-text dark:bg-gray-900 dark:text-gray-100';
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if ((event.target as HTMLElement).closest('input, textarea, select')) return;
-      if (event.altKey) {
-        const keyMap: Record<string, View> = { d: 'dashboard', r: 'reservations', f: 'financial', o: 'contacts', g: 'governance', c: 'settings' };
-        if (event.key === 't') toggleDarkMode();
-        else if (loggedInUser && keyMap[event.key]) setCurrentView(keyMap[event.key]);
-      }
     };
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [loggedInUser]);
 
-  return {
-    isDarkMode, toggleDarkMode, currentView, setCurrentView, isSidebarOpen, setIsSidebarOpen, reservations, suiteStatuses,
-    costs, contacts, loggedInUser, handleLogin, handleLogout, handleAddReservation, handleDeleteReservation,
-    handleUpdateSuiteStatus, handleUpdateContact, handleAddContact, handleDeleteContact,
-    handleAddCost, handleUpdateCost, handleDeleteCost,
-    apiBaseUrl, setApiBaseUrl, apiKey, setApiKey
-  };
+    // --- POLLING EFFECT ---
+    useEffect(() => {
+        if (apiBaseUrl) {
+            syncDataWithServer(); // Initial sync
+            const interval = setInterval(syncDataWithServer, 60000); // Poll every 60s
+            return () => clearInterval(interval);
+        }
+    }, [apiBaseUrl, apiKey, syncDataWithServer]);
+
+
+    // --- PERSISTENCE EFFECTS (LOCAL + API) ---
+    // Whenever data changes, we save to local storage AND try to push to API if configured
+    
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEYS.RESERVATIONS, JSON.stringify(reservations));
+    }, [reservations]);
+
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEYS.SUITES, JSON.stringify(suiteStatuses));
+    }, [suiteStatuses]);
+
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEYS.COSTS, JSON.stringify(costs));
+    }, [costs]);
+
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEYS.CONTACTS, JSON.stringify(contacts));
+    }, [contacts]);
+
+    // Settings persistence
+    useEffect(() => localStorage.setItem(STORAGE_KEYS.API_URL, JSON.stringify(apiBaseUrl)), [apiBaseUrl]);
+    useEffect(() => localStorage.setItem(STORAGE_KEYS.API_KEY, JSON.stringify(apiKey)), [apiKey]);
+    useEffect(() => localStorage.setItem(STORAGE_KEYS.THEME, JSON.stringify(isDarkMode)), [isDarkMode]);
+
+    useEffect(() => {
+        if (isDarkMode) document.documentElement.classList.add('dark');
+        else document.documentElement.classList.remove('dark');
+    }, [isDarkMode]);
+
+    useEffect(() => {
+        if (loggedInUser) sessionStorage.setItem('hotel_user', loggedInUser);
+        else sessionStorage.removeItem('hotel_user');
+    }, [loggedInUser]);
+
+    const toggleDarkMode = () => setIsDarkMode(prev => !prev);
+
+    // --- DATA EXPORT/IMPORT ---
+    const handleExportData = () => {
+        const data = {
+            reservations,
+            suiteStatuses,
+            costs,
+            contacts,
+            exportedAt: new Date().toISOString()
+        };
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `backup-hotel-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    const handleImportData = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const data = JSON.parse(event.target?.result as string);
+                if(confirm('Isso substituirá todos os dados atuais pelos dados do arquivo. Deseja continuar?')) {
+                    if (data.reservations) setReservations(data.reservations);
+                    if (data.suiteStatuses) setSuiteStatuses(data.suiteStatuses);
+                    if (data.costs) setCosts(data.costs);
+                    if (data.contacts) setContacts(data.contacts);
+                    alert('Dados restaurados com sucesso!');
+                }
+            } catch (err) {
+                alert('Erro ao ler arquivo de backup. Verifique se é um JSON válido.');
+                console.error(err);
+            }
+        };
+        reader.readAsText(file);
+        // Reset input
+        e.target.value = '';
+    };
+
+    // --- BUSINESS LOGIC WRAPPERS ---
+
+    const handleAddReservation = (resData: NewReservationData) => {
+        const checkInDate = new Date(resData.checkIn);
+        const checkOutDate = new Date(resData.checkOut);
+        const diffTime = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
+        const numberOfNights = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+
+        const newReservation: Reservation = {
+            ...resData,
+            id: Date.now(),
+            numberOfNights,
+            amountPending: resData.totalRevenue - resData.amountPaid,
+            downPayment: resData.amountPaid > 0,
+        };
+        const newData = [...reservations, newReservation];
+        setReservations(newData);
+        pushDataToServer('reservations', newData); // Trigger API push
+    };
+
+    const handleDeleteReservation = (id: number) => {
+        const newData = reservations.filter(r => r.id !== id);
+        setReservations(newData);
+        pushDataToServer('reservations', newData);
+    };
+
+    const handleUpdateSuiteStatus = (suiteId: number, newStatusData: Partial<SuiteStatus>) => {
+        const newData = suiteStatuses.map(s => s.id === suiteId ? { ...s, ...newStatusData } : s);
+        setSuiteStatuses(newData);
+        pushDataToServer('suites', newData);
+    };
+
+    const handleUpdateContact = (updatedContact: Contact) => {
+        const newData = contacts.map(c => c.id === updatedContact.id ? updatedContact : c);
+        setContacts(newData);
+        pushDataToServer('contacts', newData);
+    };
+
+    const handleAddContact = (newContact: Contact) => {
+        const newData = [...contacts, { ...newContact, id: Date.now() }];
+        setContacts(newData);
+        pushDataToServer('contacts', newData);
+    };
+
+    const handleDeleteContact = (contactId: number) => {
+        const newData = contacts.filter(c => c.id !== contactId);
+        setContacts(newData);
+        pushDataToServer('contacts', newData);
+    };
+
+    const handleAddCost = (newCostData: Omit<Cost, 'id'>) => {
+        const newData = [...costs, { ...newCostData, id: Date.now() }];
+        setCosts(newData);
+        pushDataToServer('costs', newData);
+    };
+
+    const handleUpdateCost = (updatedCost: Cost) => {
+        const newData = costs.map(c => c.id === updatedCost.id ? updatedCost : c);
+        setCosts(newData);
+        pushDataToServer('costs', newData);
+    };
+
+    const handleDeleteCost = (costId: number) => {
+        const newData = costs.filter(c => c.id !== costId);
+        setCosts(newData);
+        pushDataToServer('costs', newData);
+    };
+
+    const handleLogin = (login: string, pass: string) => {
+        if ((login === 'Larissa' && pass === 'Knupp24') || (login === 'Mara' && pass === '@me19591959') || (login === 'Admin' && pass === 'admin') || (login.toLowerCase() === 'dione' && pass === '12345678')) {
+            setLoggedInUser(login);
+            return true;
+        }
+        return false;
+    };
+
+    const handleLogout = () => {
+        setLoggedInUser(null);
+    };
+
+    return {
+        isDarkMode, toggleDarkMode, currentView, setCurrentView, isSidebarOpen, setIsSidebarOpen,
+        reservations, suiteStatuses, costs, contacts, loggedInUser,
+        apiBaseUrl, setApiBaseUrl, apiKey, setApiKey,
+        handleAddReservation, handleDeleteReservation, handleUpdateSuiteStatus,
+        handleUpdateContact, handleAddContact, handleDeleteContact,
+        handleAddCost, handleUpdateCost, handleDeleteCost,
+        handleLogin, handleLogout,
+        handleExportData, handleImportData,
+        syncStatus, forceSync: syncDataWithServer
+    };
 };
 
 const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -1347,7 +1438,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 // 9. COMPONENTE PRINCIPAL (Main App Component)
 // ============================================================================
 const MainAppLayout: React.FC = () => {
-    const { isDarkMode, toggleDarkMode, currentView, setCurrentView, loggedInUser, handleLogout, isSidebarOpen, setIsSidebarOpen } = useAppContext();
+    const { isDarkMode, toggleDarkMode, currentView, setCurrentView, loggedInUser, handleLogout, isSidebarOpen, setIsSidebarOpen, syncStatus, forceSync } = useAppContext();
     const navItems = [
         { id: 'dashboard', label: 'Visão Geral', icon: <HomeIcon /> },
         { id: 'reservations', label: 'Reservas', icon: <CalendarIcon /> },
@@ -1378,6 +1469,10 @@ const MainAppLayout: React.FC = () => {
                     <h1 className="text-xl md:text-2xl font-semibold">Hotel Palace Serra Verde Imperial</h1>
                 </div>
                 <div className="flex items-center gap-4">
+                    <div className="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-black/20 text-xs cursor-pointer" onClick={forceSync} title={syncStatus === 'connected' ? 'Sincronizado com VPS' : 'Clique para tentar reconectar'}>
+                        {syncStatus === 'connected' ? <CloudIcon /> : <CloudSlashIcon />}
+                        <span className="uppercase font-bold">{syncStatus === 'connected' ? 'Online' : syncStatus === 'syncing' ? 'Sync...' : 'Offline'}</span>
+                    </div>
                     <span className="text-sm hidden md:inline">Olá, <strong>{loggedInUser}</strong></span>
                     <button onClick={toggleDarkMode} className="p-2 rounded-full hover:bg-white/20 transition-colors" aria-label={isDarkMode ? "Ativar tema claro" : "Ativar tema escuro"}>{isDarkMode ? <SunIcon /> : <MoonIcon />}</button>
                     <button onClick={handleLogout} className="p-2 rounded-full hover:bg-white/20 transition-colors" aria-label="Sair"><ArrowLeftOnRectangleIcon /></button>
