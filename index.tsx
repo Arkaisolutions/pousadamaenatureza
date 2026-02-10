@@ -269,9 +269,6 @@ const parseSuitesFromReservation = (res: Reservation): number => {
 // ============================================================================
 // RESET DE DADOS PARA NOVO HOTEL: Hotel Palace Serra Verde Imperial
 const initialReservationsData: Omit<Reservation, 'amountPending' | 'downPayment'>[] = [
-  // Dados de exemplo apenas para demonstração do sistema limpo
-  { id: 1, guestName: "Exemplo Hóspede VIP", contact: "21 99999-9999", accommodation: "Suíte Imperial", bookingChannel: "Reserva Direta", description: "1 Suíte Master", adults: 2, children: 0, extraBed: false, breakfast: true, checkIn: "2026-02-10", checkOut: "2026-02-12", numberOfNights: 2, totalRevenue: 1500, amountPaid: 1500, observations: "Teste de sistema limpo", status: 'Confirmada' },
-  
   // Pr. Wilson Santos
   { id: 2, guestName: "Pr. Wilson Santos e esposa Martha", contact: "", accommodation: "Suíte Casal", bookingChannel: "WhatsApp", description: "1 diária", adults: 2, children: 0, extraBed: false, breakfast: true, checkIn: "2026-02-06", checkOut: "2026-02-07", numberOfNights: 1, totalRevenue: 297, amountPaid: 0, observations: "", status: 'Confirmada' },
   
@@ -1163,10 +1160,10 @@ const LoginPage: React.FC<{ onLogin: (user: string, pass: string) => boolean, is
 
 // Keys for LocalStorage
 const STORAGE_KEYS = {
-  RESERVATIONS: 'hotel_reservations',
-  SUITES: 'hotel_suite_statuses',
-  COSTS: 'hotel_costs',
-  CONTACTS: 'hotel_contacts',
+  RESERVATIONS: 'hotel_reservations_v2026_rev2',
+  SUITES: 'hotel_suite_statuses_v2026_rev2',
+  COSTS: 'hotel_costs_v2026_rev2',
+  CONTACTS: 'hotel_contacts_v2026_rev2',
   THEME: 'hotel_dark_mode',
   API_URL: 'hotel_api_url',
   API_KEY: 'hotel_api_key'
