@@ -286,6 +286,9 @@ const initialReservationsData: Omit<Reservation, 'amountPending' | 'downPayment'
 
   // Antônio Carlos Braga
   { id: 7, guestName: "Antônio Carlos Braga", contact: "antoniocarlos68@gmail.com", accommodation: "Suíte Standard", bookingChannel: "Whatsapp", description: "Pax: 2 pessoas", adults: 2, children: 0, extraBed: false, breakfast: true, checkIn: "2026-02-14", checkOut: "2026-02-21", numberOfNights: 7, totalRevenue: 1500, amountPaid: 750, observations: "50% pago.", status: 'Confirmada' },
+
+  // Paulo Sergio da Cruz
+  { id: 8, guestName: "Paulo Sergio da Cruz", contact: "", accommodation: "Quarto Deluxe ", bookingChannel: "WhatsApp", description: "2 pessoas - Carnaval", adults: 2, children: 0, extraBed: false, breakfast: true, checkIn: "2026-02-13", checkOut: "2026-02-18", numberOfNights: 3, totalRevenue: 1200, amountPaid: 600, observations: "50% pago.", status: 'Confirmada' },
 ];
 const initialReservations = initialReservationsData.map(r => ({ ...r, amountPending: r.totalRevenue - r.amountPaid, downPayment: r.amountPaid > 0 }));
 
