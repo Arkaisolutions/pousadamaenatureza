@@ -1166,10 +1166,10 @@ const LoginPage: React.FC<{ onLogin: (user: string, pass: string) => boolean, is
 
 // Keys for LocalStorage
 const STORAGE_KEYS = {
-  RESERVATIONS: 'hotel_reservations_v2026_rev2',
-  SUITES: 'hotel_suite_statuses_v2026_rev2',
-  COSTS: 'hotel_costs_v2026_rev2',
-  CONTACTS: 'hotel_contacts_v2026_rev2',
+  RESERVATIONS: 'hotel_reservations_v2026_rev4',
+  SUITES: 'hotel_suite_statuses_v2026_rev4',
+  COSTS: 'hotel_costs_v2026_rev4',
+  CONTACTS: 'hotel_contacts_v2026_rev4',
   THEME: 'hotel_dark_mode',
   API_URL: 'hotel_api_url',
   API_KEY: 'hotel_api_key'
