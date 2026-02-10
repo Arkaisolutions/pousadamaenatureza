@@ -164,7 +164,7 @@ const CloudSlashIcon = () => (
 // 2. TIPOS E CONSTANTES (Types & Constants)
 // ============================================================================
 type ReservationStatus = 'Confirmada' | 'Cancelada' | 'Pendente';
-type Reservation = {
+interface Reservation {
     id: number;
     guestName: string;
     contact: string;
@@ -183,8 +183,8 @@ type Reservation = {
     amountPending: number;
     downPayment: boolean;
     observations: string;
-    status: ReservationStatus;
-};
+    status: string; // Changed to string to match interface flexibility, but commonly ReservationStatus
+}
 
 type NewReservationData = Omit<Reservation, 'id' | 'amountPending' | 'downPayment' | 'numberOfNights'>;
 
@@ -271,6 +271,13 @@ const parseSuitesFromReservation = (res: Reservation): number => {
 const initialReservationsData: Omit<Reservation, 'amountPending' | 'downPayment'>[] = [
   // Dados de exemplo apenas para demonstração do sistema limpo
   { id: 1, guestName: "Exemplo Hóspede VIP", contact: "21 99999-9999", accommodation: "Suíte Imperial", bookingChannel: "Reserva Direta", description: "1 Suíte Master", adults: 2, children: 0, extraBed: false, breakfast: true, checkIn: new Date().toISOString().split('T')[0], checkOut: new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0], numberOfNights: 2, totalRevenue: 1500, amountPaid: 1500, observations: "Teste de sistema limpo", status: 'Confirmada' },
+  // Novas reservas adicionadas
+  { id: 2, guestName: "Pr. Wilson Santos e esposa Martha", contact: "", accommodation: "Suíte Casal", bookingChannel: "WhatsApp", description: "1 diária", adults: 2, children: 0, extraBed: false, breakfast: true, checkIn: "2025-02-06", checkOut: "2025-02-07", numberOfNights: 1, totalRevenue: 297, amountPaid: 0, observations: "", status: 'Confirmada' },
+  { id: 3, guestName: "Leise Franciele Silla", contact: "Leisefranciele10@hotmail.com", accommodation: "Suíte Casal", bookingChannel: "WhatsApp", description: "3 diárias", adults: 2, children: 0, extraBed: false, breakfast: true, checkIn: "2025-02-07", checkOut: "2025-02-10", numberOfNights: 3, totalRevenue: 891, amountPaid: 0, observations: "Dourados MS. CPF: 008.417.759-40", status: 'Confirmada' },
+  { id: 4, guestName: "José Ronald Rangel Ribeiro", contact: "", accommodation: "Suíte Individual", bookingChannel: "WhatsApp", description: "Carnaval", adults: 1, children: 0, extraBed: false, breakfast: true, checkIn: "2025-03-01", checkOut: "2025-03-04", numberOfNights: 3, totalRevenue: 0, amountPaid: 0, observations: "CPF 95507841772. Valor a confirmar (Carnaval).", status: 'Confirmada' },
+  { id: 5, guestName: "José Carlos Abreu da Silva", contact: "Fortinhogui@0203@gmail.com", accommodation: "Suíte Standard", bookingChannel: "Renan Mozer", description: "Pax: 2 pessoas", adults: 2, children: 0, extraBed: false, breakfast: true, checkIn: "2025-02-14", checkOut: "2025-02-21", numberOfNights: 7, totalRevenue: 2100, amountPaid: 0, observations: "End: Rua Fernando Costa Machado 49 Maceió Niterói. Acomp: Kecia da Silva Monteiro (CPF 185.334.627-60, Email: Keciamonteiro10@gmail.com)", status: 'Confirmada' },
+  // Alyson
+  { id: 6, guestName: "Alyson Crystiano de Moraes Damião", contact: "", accommodation: "Quarto Deluxe e Suíte Deluxe (214, 208)", bookingChannel: "WhatsApp", description: "4 pessoas", adults: 4, children: 0, extraBed: false, breakfast: true, checkIn: "2025-02-13", checkOut: "2025-02-18", numberOfNights: 4, totalRevenue: 3240, amountPaid: 1620, observations: "50% pago. Suítes 214 e 208.", status: 'Confirmada' },
 ];
 const initialReservations = initialReservationsData.map(r => ({ ...r, amountPending: r.totalRevenue - r.amountPaid, downPayment: r.amountPaid > 0 }));
 
