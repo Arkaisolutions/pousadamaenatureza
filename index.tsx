@@ -278,11 +278,14 @@ const initialReservationsData: Omit<Reservation, 'amountPending' | 'downPayment'
   // José Ronald
   { id: 4, guestName: "José Ronald Rangel Ribeiro", contact: "", accommodation: "Suíte Individual", bookingChannel: "WhatsApp", description: "Carnaval 3 diárias", adults: 1, children: 0, extraBed: false, breakfast: true, checkIn: "2026-02-13", checkOut: "2026-02-16", numberOfNights: 3, totalRevenue: 891, amountPaid: 450, observations: "CPF 95507841772. Valor a confirmar.", status: 'Confirmada' },
   
-  // José Carlos Abreu
+  // Kecia da Silva Monteiro
   { id: 5, guestName: "Kecia da Silva Monteiro", contact: "keciamonteiro10@gmail.com", accommodation: "Suíte Standard", bookingChannel: "Whatsapp", description: "Pax: 2 pessoas", adults: 2, children: 0, extraBed: false, breakfast: true, checkIn: "2026-02-14", checkOut: "2026-02-21", numberOfNights: 7, totalRevenue: 1508, amountPaid: 754, observations: "End: Rua Fernando Costa Machado 49 Maceió Niterói. Acomp: Kecia da Silva Monteiro (CPF 185.334.627-60, Email: Keciamonteiro10@gmail.com)", status: 'Confirmada' },
   
   // Alyson Crystiano
   { id: 6, guestName: "Alyson Crystiano de Moraes Damião", contact: "", accommodation: "Quarto Deluxe e Suíte Deluxe (214, 208)", bookingChannel: "WhatsApp", description: "4 pessoas - Carnaval", adults: 4, children: 0, extraBed: false, breakfast: true, checkIn: "2026-02-13", checkOut: "2026-02-18", numberOfNights: 5, totalRevenue: 3240, amountPaid: 1620, observations: "50% pago. Suítes 214 e 208.", status: 'Confirmada' },
+
+  // Antônio Carlos Braga
+  { id: 7, guestName: "Antônio Carlos Braga", contact: "antoniocarlos68@gmail.com", accommodation: "Suíte Standard", bookingChannel: "Whatsapp", description: "Pax: 2 pessoas", adults: 2, children: 0, extraBed: false, breakfast: true, checkIn: "2026-02-14", checkOut: "2026-02-21", numberOfNights: 7, totalRevenue: 1500, amountPaid: 750, observations: "50% pago.", status: 'Confirmada' },
 ];
 const initialReservations = initialReservationsData.map(r => ({ ...r, amountPending: r.totalRevenue - r.amountPaid, downPayment: r.amountPaid > 0 }));
 
