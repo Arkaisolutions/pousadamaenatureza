@@ -489,7 +489,8 @@ const ReservationsPage: React.FC = () => {
                 )}
             </div>
             
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
+            {/* Desktop Table */}
+            <div className="hidden md:block bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm text-left dark:text-gray-300">
                         <thead className="bg-gray-100 dark:bg-gray-700 uppercase text-xs text-gray-700 dark:text-gray-200">
@@ -531,6 +532,36 @@ const ReservationsPage: React.FC = () => {
                     </table>
                 </div>
             </div>
+
+            {/* Mobile Cards (View Simplificada para Celular) */}
+            <div className="md:hidden space-y-4">
+                {reservations.map(r => (
+                    <div key={r.id} className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow border dark:border-gray-700">
+                        <div className="flex justify-between items-start">
+                             <div>
+                                <h4 className="font-bold text-lg dark:text-white">{r.guestName}</h4>
+                                <p className="text-sm text-gray-500">{formatDate(r.checkIn)} - {formatDate(r.checkOut)}</p>
+                             </div>
+                             <span className={`px-2 py-1 text-xs rounded-full font-bold ${r.status === 'Cancelada' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>{r.status}</span>
+                        </div>
+                        <div className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                            <p><strong>Acomodação:</strong> {r.accommodation}</p>
+                            <p><strong>Valor:</strong> {formatCurrency(r.totalRevenue)}</p>
+                        </div>
+                        {isEditor && (
+                            <div className="mt-4 pt-3 border-t dark:border-gray-700 flex justify-end gap-3">
+                                <button onClick={() => handleOpenEdit(r)} className="flex items-center gap-1 text-blue-600 font-bold text-sm px-2 py-1 bg-blue-50 rounded">
+                                    <PencilSquareIcon /> Editar
+                                </button>
+                                <button onClick={() => { if(confirm('Apagar reserva permanentemente?')) handleDeleteReservation(r.id); }} className="flex items-center gap-1 text-red-600 font-bold text-sm px-2 py-1 bg-red-50 rounded">
+                                    <TrashIcon /> Excluir
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+            
             <AddReservationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} reservationToEdit={editingReservation} />
         </div>
     );
@@ -811,10 +842,14 @@ const LoginPage: React.FC = () => {
 const MainLayout: React.FC = () => {
     const { currentView, setCurrentView, isDarkMode, toggleDarkMode, currentUser, handleLogout, isLoading } = useAppContext();
     const isEditor = currentUser?.role === 'editor';
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     
     const MenuBtn: React.FC<{ view: View, label: string, icon: any }> = ({ view, label, icon }) => (
         <button 
-            onClick={() => setCurrentView(view)} 
+            onClick={() => {
+                setCurrentView(view);
+                setIsMobileMenuOpen(false);
+            }} 
             className={`flex items-center gap-3 p-3 rounded-lg w-full transition ${currentView === view ? 'bg-blue-600 text-white shadow-md' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
         >
             {icon} <span className="font-medium">{label}</span>
@@ -823,7 +858,7 @@ const MainLayout: React.FC = () => {
 
     return (
         <div className={`min-h-screen flex ${isDarkMode ? 'dark bg-gray-900 text-gray-100' : 'bg-gray-50 text-gray-900'}`}>
-            {/* Sidebar */}
+            {/* Sidebar (Desktop) */}
             <aside className="w-64 bg-white dark:bg-gray-800 shadow-xl flex flex-col z-10 hidden md:flex">
                 <div className="p-6 border-b dark:border-gray-700">
                     <h1 className="text-xl font-bold flex items-center gap-2"><BuildingIcon /> Hotel Palace</h1>
@@ -845,26 +880,54 @@ const MainLayout: React.FC = () => {
                 </div>
             </aside>
             
+            {/* Mobile Menu Overlay */}
+            {isMobileMenuOpen && (
+                <div className="fixed inset-0 z-50 bg-black/50 md:hidden" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="bg-white dark:bg-gray-800 w-64 h-full shadow-2xl flex flex-col fade-in-left" onClick={e => e.stopPropagation()}>
+                        <div className="p-6 border-b dark:border-gray-700 flex justify-between items-center">
+                            <h1 className="text-xl font-bold flex items-center gap-2"><BuildingIcon /> Menu</h1>
+                            <button onClick={() => setIsMobileMenuOpen(false)}><CloseIcon /></button>
+                        </div>
+                        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+                            <MenuBtn view="dashboard" label="Visão Geral" icon={<HomeIcon />} />
+                            <MenuBtn view="reservations" label="Reservas" icon={<CalendarIcon />} />
+                            <MenuBtn view="financial" label="Financeiro" icon={<BanknotesIcon />} />
+                            <MenuBtn view="contacts" label="Contatos" icon={<UsersIcon />} />
+                            <MenuBtn view="governance" label="Governança" icon={<BroomIcon />} />
+                            <MenuBtn view="settings" label="Configurações" icon={<Cog6ToothIcon />} />
+                        </nav>
+                        <div className="p-4 border-t dark:border-gray-700">
+                             <div className="mb-4 text-sm opacity-70">
+                                Olá, <strong>{currentUser?.name}</strong>
+                                {!isEditor && <span className="block text-xs bg-yellow-100 text-yellow-800 px-1 rounded w-fit mt-1">Modo Leitor</span>}
+                            </div>
+                            <button onClick={handleLogout} className="flex items-center gap-2 text-red-500 hover:text-red-600 font-bold text-sm"><ArrowLeftOnRectangleIcon /> Sair</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            
             {/* Main Content */}
-            <main className="flex-1 overflow-y-auto">
+            <main className="flex-1 overflow-y-auto flex flex-col">
                 {isLoading && <div className="fixed top-0 left-0 right-0 h-1 bg-blue-600 animate-pulse z-50"></div>}
                 
                 {/* Mobile Header */}
-                <div className="md:hidden p-4 bg-white dark:bg-gray-800 shadow flex justify-between items-center">
+                <div className="md:hidden p-4 bg-white dark:bg-gray-800 shadow flex justify-between items-center sticky top-0 z-20">
                     <span className="font-bold flex items-center gap-2"><BuildingIcon/> Hotel Palace</span>
                     <div className="flex items-center gap-2">
                         {!isEditor && <span className="text-xs bg-yellow-100 text-yellow-800 px-1 rounded">Leitor</span>}
-                        <button onClick={() => setCurrentView(currentView === 'dashboard' ? 'settings' : 'dashboard')}><Bars3Icon /></button>
-                        <button onClick={handleLogout} className="text-red-500"><ArrowLeftOnRectangleIcon/></button>
+                        <button onClick={() => setIsMobileMenuOpen(true)} className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"><Bars3Icon /></button>
                     </div>
                 </div>
 
-                {currentView === 'dashboard' && <DashboardPage />}
-                {currentView === 'reservations' && <ReservationsPage />}
-                {currentView === 'financial' && <FinancialPage />}
-                {currentView === 'contacts' && <ContactsPage />}
-                {currentView === 'governance' && <HousekeepingPage />}
-                {currentView === 'settings' && <SettingsPage />}
+                <div className="flex-1">
+                    {currentView === 'dashboard' && <DashboardPage />}
+                    {currentView === 'reservations' && <ReservationsPage />}
+                    {currentView === 'financial' && <FinancialPage />}
+                    {currentView === 'contacts' && <ContactsPage />}
+                    {currentView === 'governance' && <HousekeepingPage />}
+                    {currentView === 'settings' && <SettingsPage />}
+                </div>
             </main>
         </div>
     );
