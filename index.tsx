@@ -12,7 +12,6 @@ import { createClient } from '@supabase/supabase-js';
 const SUPABASE_URL = 'https://hoepznsyzdlrzzlrlurp.supabase.co';
 
 // CHAVE PÚBLICA (ANON KEY)
-// Certifique-se de que esta chave corresponde à 'anon' / 'public' key no painel do Supabase -> Settings -> API
 const SUPABASE_KEY = 'sb_publishable_ne5Px1teeHCX7KS59_qKzA_J8hucLEg';
 
 // Inicialização do cliente Supabase
@@ -44,11 +43,20 @@ const BanknotesIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" fill="none"
 const Bars3Icon = () => (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>);
 const CloudIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" /></svg>);
 const CloudSlashIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M3 3l18 18M9.75 9.75a3 3 0 004.5 4.5m-6.75-2.25a5.25 5.25 0 017.42-7.42m2.81 2.81a3 3 0 013.77 3.86l-1.5 1.5M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 012.33-1.463M18 19.5h-9" /></svg>);
+const EyeIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>);
+const PencilSquareIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg>);
 
 // ============================================================================
 // 2. TIPOS E CONSTANTES
 // ============================================================================
 type ReservationStatus = 'Confirmada' | 'Cancelada' | 'Pendente';
+type UserRole = 'editor' | 'viewer'; // Adicionado tipo de Role
+
+type User = {
+    name: string;
+    role: UserRole;
+};
+
 type Reservation = {
     id: number;
     guestName: string;
@@ -134,8 +142,9 @@ interface AppContextType {
     currentView: View; setCurrentView: React.Dispatch<React.SetStateAction<View>>;
     isSidebarOpen: boolean; setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
     reservations: Reservation[]; suiteStatuses: SuiteStatus[]; costs: Cost[]; contacts: Contact[];
-    loggedInUser: string | null;
+    currentUser: User | null; // Alterado de loggedInUser string para objeto User
     handleAddReservation: (res: NewReservationData) => Promise<void>;
+    handleUpdateReservation: (id: number, res: NewReservationData) => Promise<void>;
     handleDeleteReservation: (id: number) => Promise<void>;
     handleUpdateSuiteStatus: (suiteId: number, newStatus: string) => Promise<void>;
     handleAddContact: (newContact: Contact) => Promise<void>;
@@ -153,7 +162,15 @@ const useAppLogic = (): AppContextType => {
     const [isDarkMode, setIsDarkMode] = useState(() => {
         try { return JSON.parse(localStorage.getItem('hotel_dark_mode') || 'false'); } catch { return false; }
     });
-    const [loggedInUser, setLoggedInUser] = useState<string | null>(() => sessionStorage.getItem('hotel_user'));
+    // Recupera usuário completo (objeto) do storage
+    const [currentUser, setCurrentUser] = useState<User | null>(() => {
+        try {
+            const stored = sessionStorage.getItem('hotel_user');
+            return stored ? JSON.parse(stored) : null;
+        } catch {
+            return null;
+        }
+    });
 
     const [currentView, setCurrentView] = useState<View>('dashboard');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -223,12 +240,12 @@ const useAppLogic = (): AppContextType => {
 
     // Atualizar dados ao logar ou focar na janela (Sincronia básica)
     useEffect(() => {
-        if (loggedInUser) {
+        if (currentUser) {
             fetchData();
             const interval = setInterval(fetchData, 30000); // Atualiza a cada 30s
             return () => clearInterval(interval);
         }
-    }, [loggedInUser, fetchData]);
+    }, [currentUser, fetchData]);
 
     // Ações de Banco de Dados
     const handleAddReservation = async (resData: NewReservationData) => {
@@ -258,6 +275,32 @@ const useAppLogic = (): AppContextType => {
             });
         } else {
             alert('Erro ao salvar no banco: ' + error.message);
+        }
+        setIsLoading(false);
+    };
+
+    const handleUpdateReservation = async (id: number, resData: NewReservationData) => {
+        setIsLoading(true);
+        const checkInDate = new Date(resData.checkIn);
+        const checkOutDate = new Date(resData.checkOut);
+        const nights = Math.max(1, Math.ceil(Math.abs(checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24)));
+        const amountPending = resData.totalRevenue - resData.amountPaid;
+
+        const dbData = {
+            guest_name: resData.guestName, contact: resData.contact, accommodation: resData.accommodation,
+            booking_channel: resData.bookingChannel, description: resData.description, adults: resData.adults,
+            children: resData.children, extra_bed: resData.extraBed, breakfast: resData.breakfast,
+            check_in: resData.checkIn, check_out: resData.checkOut, number_of_nights: nights,
+            total_revenue: resData.totalRevenue, amount_paid: resData.amountPaid, amount_pending: amountPending,
+            down_payment: resData.amountPaid > 0, observations: resData.observations, status: resData.status
+        };
+
+        const { error } = await supabase.from('reservations').update(dbData).eq('id', id);
+
+        if (!error) {
+            await fetchData();
+        } else {
+            alert('Erro ao atualizar reserva: ' + error.message);
         }
         setIsLoading(false);
     };
@@ -305,25 +348,48 @@ const useAppLogic = (): AppContextType => {
         setCosts(prev => prev.filter(c => c.id !== id));
     };
 
-    // Auth Simples
-    const handleLogin = (u: string, p: string) => {
-        if ((u === 'Larissa' && p === 'Knupp24') || (u === 'Dione' && p === '12345678') || (u === 'Admin' && p === 'admin')) {
-            setLoggedInUser(u);
-            sessionStorage.setItem('hotel_user', u);
+    // Auth Simples Refatorado
+    const handleLogin = (uInput: string, pInput: string) => {
+        const u = uInput.trim(); // Remove espaços acidentais
+        const p = pInput.trim();
+
+        let role: UserRole = 'viewer';
+        let isValid = false;
+        let displayName = u;
+
+        if (u === 'Larissa' && p === 'Knupp24') {
+            isValid = true;
+            role = 'editor';
+        } else if (u === 'Dione' && p === '12345678') {
+            isValid = true;
+            role = 'viewer'; // Dione é leitora
+        } else if (u === 'Admin' && p === 'admin') {
+            isValid = true;
+            role = 'editor';
+        } else if (u === 'Mara' && p === '@me19591959') {
+            isValid = true;
+            role = 'editor';
+        }
+
+        if (isValid) {
+            const userObj = { name: displayName, role };
+            setCurrentUser(userObj);
+            sessionStorage.setItem('hotel_user', JSON.stringify(userObj));
             return true;
         }
         return false;
     };
+
     const handleLogout = () => {
-        setLoggedInUser(null);
+        setCurrentUser(null);
         sessionStorage.removeItem('hotel_user');
     };
     const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
     return {
         isDarkMode, toggleDarkMode, currentView, setCurrentView, isSidebarOpen, setIsSidebarOpen,
-        reservations, suiteStatuses, costs, contacts, loggedInUser,
-        handleAddReservation, handleDeleteReservation, handleUpdateSuiteStatus,
+        reservations, suiteStatuses, costs, contacts, currentUser,
+        handleAddReservation, handleUpdateReservation, handleDeleteReservation, handleUpdateSuiteStatus,
         handleAddContact, handleDeleteContact, handleAddCost, handleDeleteCost,
         handleLogin, handleLogout, isLoading
     };
@@ -399,14 +465,28 @@ const DashboardPage: React.FC = () => {
 
 // --- RESERVAS ---
 const ReservationsPage: React.FC = () => {
-    const { reservations, handleDeleteReservation } = useAppContext();
+    const { reservations, handleDeleteReservation, currentUser } = useAppContext();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingReservation, setEditingReservation] = useState<Reservation | null>(null);
+    const isEditor = currentUser?.role === 'editor';
+
+    const handleOpenNew = () => {
+        setEditingReservation(null);
+        setIsModalOpen(true);
+    };
+
+    const handleOpenEdit = (res: Reservation) => {
+        setEditingReservation(res);
+        setIsModalOpen(true);
+    };
 
     return (
         <div className="p-6 space-y-6">
             <div className="flex justify-between items-center">
                 <h2 className="text-3xl font-bold text-gray-800 dark:text-white">Reservas</h2>
-                <button onClick={() => setIsModalOpen(true)} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-bold shadow">+ Nova Reserva</button>
+                {isEditor && (
+                    <button onClick={handleOpenNew} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-bold shadow">+ Nova</button>
+                )}
             </div>
             
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
@@ -436,7 +516,14 @@ const ReservationsPage: React.FC = () => {
                                         <span className={`px-2 py-1 text-xs rounded-full font-bold ${r.status === 'Cancelada' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>{r.status}</span>
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                        <button onClick={() => { if(confirm('Apagar reserva permanentemente?')) handleDeleteReservation(r.id); }} className="text-red-500 hover:bg-red-50 p-2 rounded"><TrashIcon /></button>
+                                        {isEditor ? (
+                                            <div className="flex justify-end gap-2">
+                                                <button onClick={() => handleOpenEdit(r)} className="text-blue-500 hover:bg-blue-50 p-2 rounded"><PencilSquareIcon /></button>
+                                                <button onClick={() => { if(confirm('Apagar reserva permanentemente?')) handleDeleteReservation(r.id); }} className="text-red-500 hover:bg-red-50 p-2 rounded"><TrashIcon /></button>
+                                            </div>
+                                        ) : (
+                                            <span className="text-gray-400"><EyeIcon /></span>
+                                        )}
                                     </td>
                                 </tr>
                             ))}
@@ -444,17 +531,47 @@ const ReservationsPage: React.FC = () => {
                     </table>
                 </div>
             </div>
-            <AddReservationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <AddReservationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} reservationToEdit={editingReservation} />
         </div>
     );
 };
 
-const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
-    const { handleAddReservation, isLoading } = useAppContext();
+const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; reservationToEdit: Reservation | null }> = ({ isOpen, onClose, reservationToEdit }) => {
+    const { handleAddReservation, handleUpdateReservation, isLoading } = useAppContext();
     const [formData, setFormData] = useState<any>({
         guestName: '', contact: '', checkIn: '', checkOut: '', adults: 2, children: 0,
-        totalRevenue: 0, amountPaid: 0, status: 'Confirmada', accommodation: 'Quarto Padrão'
+        totalRevenue: 0, amountPaid: 0, status: 'Confirmada', accommodation: 'Quarto Padrão',
+        bookingChannel: 'WhatsApp', observations: '', extraBed: false, breakfast: true
     });
+
+    useEffect(() => {
+        if (isOpen) {
+            if (reservationToEdit) {
+                setFormData({
+                    guestName: reservationToEdit.guestName,
+                    contact: reservationToEdit.contact,
+                    checkIn: reservationToEdit.checkIn,
+                    checkOut: reservationToEdit.checkOut,
+                    adults: reservationToEdit.adults,
+                    children: reservationToEdit.children,
+                    totalRevenue: reservationToEdit.totalRevenue,
+                    amountPaid: reservationToEdit.amountPaid,
+                    status: reservationToEdit.status,
+                    accommodation: reservationToEdit.accommodation,
+                    bookingChannel: reservationToEdit.bookingChannel,
+                    observations: reservationToEdit.observations,
+                    extraBed: reservationToEdit.extraBed,
+                    breakfast: reservationToEdit.breakfast
+                });
+            } else {
+                setFormData({
+                    guestName: '', contact: '', checkIn: '', checkOut: '', adults: 2, children: 0,
+                    totalRevenue: 0, amountPaid: 0, status: 'Confirmada', accommodation: 'Quarto Padrão',
+                    bookingChannel: 'WhatsApp', observations: '', extraBed: false, breakfast: true
+                });
+            }
+        }
+    }, [isOpen, reservationToEdit]);
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -463,47 +580,92 @@ const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void }> = 
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        await handleAddReservation({
+        const dataToSave = {
             ...formData,
             adults: Number(formData.adults), children: Number(formData.children),
             totalRevenue: Number(formData.totalRevenue), amountPaid: Number(formData.amountPaid)
-        });
+        };
+
+        if (reservationToEdit) {
+            await handleUpdateReservation(reservationToEdit.id, dataToSave);
+        } else {
+            await handleAddReservation(dataToSave);
+        }
         onClose();
     };
 
     if (!isOpen) return null;
     return (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
-                <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-bold dark:text-white">Nova Reserva</h3>
-                    <button onClick={onClose}><CloseIcon/></button>
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-end md:items-center justify-center p-0 md:p-4">
+            <div className="bg-white dark:bg-gray-800 w-full h-[95vh] md:h-auto md:max-h-[90vh] rounded-t-2xl md:rounded-xl shadow-2xl md:max-w-lg flex flex-col">
+                <div className="flex justify-between items-center p-4 border-b dark:border-gray-700">
+                    <h3 className="text-xl font-bold dark:text-white">{reservationToEdit ? 'Editar Reserva' : 'Nova Reserva'}</h3>
+                    <button onClick={onClose} className="p-2"><CloseIcon/></button>
                 </div>
-                <form onSubmit={handleSubmit} className="space-y-3">
-                    <input name="guestName" placeholder="Nome do Hóspede" required className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} />
-                    <input name="contact" placeholder="Telefone / Contato" className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} />
-                    <div className="grid grid-cols-2 gap-2">
-                        <div><label className="text-xs">Check-in</label><input type="date" name="checkIn" required className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
-                        <div><label className="text-xs">Check-out</label><input type="date" name="checkOut" required className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                        <div><label className="text-xs">Adultos</label><input type="number" name="adults" defaultValue={2} className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
-                        <div><label className="text-xs">Crianças</label><input type="number" name="children" defaultValue={0} className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
-                    </div>
-                    <div>
-                        <label className="text-xs">Valor Total (R$)</label>
-                        <input type="number" name="totalRevenue" step="0.01" required className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white font-bold" onChange={handleChange} />
-                        {formData.totalRevenue > 0 && <p className="text-xs text-purple-600 mt-1 font-bold">Comissão (20%): {formatCurrency(formData.totalRevenue * 0.2)}</p>}
-                    </div>
-                    <div>
-                        <label className="text-xs">Valor Pago (R$)</label>
-                        <input type="number" name="amountPaid" step="0.01" className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} />
-                    </div>
-                    <div className="flex justify-end gap-2 mt-4">
-                        <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-200 rounded text-black">Cancelar</button>
-                        <button type="submit" disabled={isLoading} className="px-4 py-2 bg-blue-600 text-white rounded font-bold">{isLoading ? 'Salvando...' : 'Confirmar'}</button>
-                    </div>
-                </form>
+                
+                <div className="flex-1 overflow-y-auto p-6">
+                    <form id="reservation-form" onSubmit={handleSubmit} className="space-y-4">
+                        <div><label className="text-xs font-semibold">Hóspede</label><input name="guestName" value={formData.guestName} placeholder="Nome Completo" required className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
+                        <div><label className="text-xs font-semibold">Contato</label><input name="contact" value={formData.contact} placeholder="Telefone / Email" className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
+                        
+                        <div className="grid grid-cols-2 gap-3">
+                            <div><label className="text-xs font-semibold">Check-in</label><input type="date" name="checkIn" value={formData.checkIn} required className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
+                            <div><label className="text-xs font-semibold">Check-out</label><input type="date" name="checkOut" value={formData.checkOut} required className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
+                        </div>
+
+                        <div>
+                            <label className="text-xs font-semibold">Acomodação</label>
+                            <select name="accommodation" value={formData.accommodation} onChange={handleChange} className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white">
+                                <option>Quarto Padrão</option>
+                                <option>Suíte Casal</option>
+                                <option>Suíte Família</option>
+                                <option>HOTEL COMPLETO</option>
+                            </select>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                            <div><label className="text-xs font-semibold">Adultos</label><input type="number" name="adults" value={formData.adults} className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
+                            <div><label className="text-xs font-semibold">Crianças</label><input type="number" name="children" value={formData.children} className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                            <div>
+                                <label className="text-xs font-semibold">Valor Total (R$)</label>
+                                <input type="number" name="totalRevenue" value={formData.totalRevenue} step="0.01" required className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white font-bold" onChange={handleChange} />
+                            </div>
+                            <div>
+                                <label className="text-xs font-semibold">Valor Pago (R$)</label>
+                                <input type="number" name="amountPaid" value={formData.amountPaid} step="0.01" className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} />
+                            </div>
+                        </div>
+                        {formData.totalRevenue > 0 && <p className="text-xs text-purple-600 font-bold text-right">Comissão (20%): {formatCurrency(formData.totalRevenue * 0.2)}</p>}
+
+                        <div className="grid grid-cols-2 gap-3">
+                             <div>
+                                <label className="text-xs font-semibold">Canal</label>
+                                <input name="bookingChannel" placeholder="Ex: WhatsApp" value={formData.bookingChannel} className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} />
+                            </div>
+                            <div>
+                                <label className="text-xs font-semibold">Status</label>
+                                <select name="status" value={formData.status} onChange={handleChange} className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white">
+                                    <option>Confirmada</option>
+                                    <option>Pendente</option>
+                                    <option>Cancelada</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="text-xs font-semibold">Observações</label>
+                            <textarea name="observations" value={formData.observations} rows={2} className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange}></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <div className="p-4 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-800 flex justify-end gap-3 pb-8 md:pb-4 safe-area-pb">
+                    <button type="button" onClick={onClose} className="px-4 py-3 bg-gray-200 rounded-lg text-black font-medium">Cancelar</button>
+                    <button type="submit" form="reservation-form" disabled={isLoading} className="px-6 py-3 bg-blue-600 text-white rounded-lg font-bold shadow-lg w-full md:w-auto">{isLoading ? 'Salvando...' : 'Confirmar'}</button>
+                </div>
             </div>
         </div>
     );
@@ -511,23 +673,26 @@ const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void }> = 
 
 // --- FINANCEIRO ---
 const FinancialPage: React.FC = () => {
-    const { costs, handleAddCost, handleDeleteCost } = useAppContext();
+    const { costs, handleAddCost, handleDeleteCost, currentUser } = useAppContext();
     const [newCost, setNewCost] = useState<any>({ description: '', amount: 0, category: 'Outros', date: new Date().toISOString().split('T')[0] });
+    const isEditor = currentUser?.role === 'editor';
 
     return (
         <div className="p-6 space-y-6">
             <h2 className="text-3xl font-bold text-gray-800 dark:text-white">Financeiro</h2>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow h-fit">
-                    <h3 className="font-bold mb-4 dark:text-white">Lançar Despesa</h3>
-                    <form onSubmit={(e) => { e.preventDefault(); handleAddCost(newCost); }} className="space-y-3">
-                        <input placeholder="Descrição" required className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onChange={e => setNewCost({ ...newCost, description: e.target.value })} />
-                        <input type="number" placeholder="Valor" required className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onChange={e => setNewCost({ ...newCost, amount: Number(e.target.value) })} />
-                        <input type="date" value={newCost.date} required className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onChange={e => setNewCost({ ...newCost, date: e.target.value })} />
-                        <button type="submit" className="w-full bg-red-600 text-white p-2 rounded font-bold hover:bg-red-700">Adicionar Saída</button>
-                    </form>
-                </div>
-                <div className="lg:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-xl shadow overflow-hidden">
+                {isEditor && (
+                    <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow h-fit">
+                        <h3 className="font-bold mb-4 dark:text-white">Lançar Despesa</h3>
+                        <form onSubmit={(e) => { e.preventDefault(); handleAddCost(newCost); }} className="space-y-3">
+                            <input placeholder="Descrição" required className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onChange={e => setNewCost({ ...newCost, description: e.target.value })} />
+                            <input type="number" placeholder="Valor" required className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onChange={e => setNewCost({ ...newCost, amount: Number(e.target.value) })} />
+                            <input type="date" value={newCost.date} required className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onChange={e => setNewCost({ ...newCost, date: e.target.value })} />
+                            <button type="submit" className="w-full bg-red-600 text-white p-2 rounded font-bold hover:bg-red-700">Adicionar Saída</button>
+                        </form>
+                    </div>
+                )}
+                <div className={`${isEditor ? 'lg:col-span-2' : 'lg:col-span-3'} bg-white dark:bg-gray-800 p-6 rounded-xl shadow overflow-hidden`}>
                     <table className="w-full text-sm dark:text-gray-300">
                         <thead className="bg-gray-100 dark:bg-gray-700 text-xs uppercase"><tr><th className="p-3 text-left">Data</th><th className="p-3 text-left">Desc.</th><th className="p-3 text-left">Valor</th><th className="p-3"></th></tr></thead>
                         <tbody>
@@ -536,7 +701,9 @@ const FinancialPage: React.FC = () => {
                                     <td className="p-3">{formatDate(c.date)}</td>
                                     <td className="p-3">{c.description}</td>
                                     <td className="p-3 text-red-600 font-bold">{formatCurrency(c.amount)}</td>
-                                    <td className="p-3 text-right"><button onClick={() => handleDeleteCost(c.id)} className="text-gray-400 hover:text-red-500"><TrashIcon /></button></td>
+                                    <td className="p-3 text-right">
+                                        {isEditor && <button onClick={() => handleDeleteCost(c.id)} className="text-gray-400 hover:text-red-500"><TrashIcon /></button>}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
@@ -549,8 +716,9 @@ const FinancialPage: React.FC = () => {
 
 // --- GOVERNANÇA ---
 const HousekeepingPage: React.FC = () => {
-    const { suiteStatuses, handleUpdateSuiteStatus } = useAppContext();
+    const { suiteStatuses, handleUpdateSuiteStatus, currentUser } = useAppContext();
     const colors = { clean: 'bg-green-100 border-green-300', dirty: 'bg-red-100 border-red-300', occupied: 'bg-blue-100 border-blue-300', maintenance: 'bg-orange-100 border-orange-300' };
+    const isEditor = currentUser?.role === 'editor';
 
     return (
         <div className="p-6">
@@ -561,8 +729,9 @@ const HousekeepingPage: React.FC = () => {
                         <span className="font-bold text-lg dark:text-gray-800">{suite.name}</span>
                         <select 
                             value={suite.status} 
+                            disabled={!isEditor}
                             onChange={(e) => handleUpdateSuiteStatus(suite.id, e.target.value)}
-                            className="text-xs p-1 rounded border-gray-300 font-semibold"
+                            className="text-xs p-1 rounded border-gray-300 font-semibold disabled:opacity-50"
                         >
                             <option value="clean">Limpo</option>
                             <option value="dirty">Sujo</option>
@@ -578,7 +747,9 @@ const HousekeepingPage: React.FC = () => {
 
 // --- CONTATOS ---
 const ContactsPage: React.FC = () => {
-    const { contacts, handleDeleteContact } = useAppContext();
+    const { contacts, handleDeleteContact, currentUser } = useAppContext();
+    const isEditor = currentUser?.role === 'editor';
+
     return (
         <div className="p-6">
              <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Contatos</h2>
@@ -587,7 +758,7 @@ const ContactsPage: React.FC = () => {
                     <div key={c.id} className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow border dark:border-gray-700">
                         <div className="flex justify-between">
                             <h4 className="font-bold dark:text-white">{c.name}</h4>
-                            <button onClick={() => { if(confirm('Apagar contato?')) handleDeleteContact(c.id); }} className="text-gray-400 hover:text-red-500"><TrashIcon /></button>
+                            {isEditor && <button onClick={() => { if(confirm('Apagar contato?')) handleDeleteContact(c.id); }} className="text-gray-400 hover:text-red-500"><TrashIcon /></button>}
                         </div>
                         <p className="text-sm text-gray-500">{c.phone}</p>
                         <p className="text-xs mt-2 bg-gray-100 dark:bg-gray-700 p-2 rounded">{c.notes || 'Sem observações'}</p>
@@ -638,7 +809,8 @@ const LoginPage: React.FC = () => {
 
 // --- APP LAYOUT ---
 const MainLayout: React.FC = () => {
-    const { currentView, setCurrentView, isDarkMode, toggleDarkMode, loggedInUser, handleLogout, isLoading } = useAppContext();
+    const { currentView, setCurrentView, isDarkMode, toggleDarkMode, currentUser, handleLogout, isLoading } = useAppContext();
+    const isEditor = currentUser?.role === 'editor';
     
     const MenuBtn: React.FC<{ view: View, label: string, icon: any }> = ({ view, label, icon }) => (
         <button 
@@ -665,7 +837,10 @@ const MainLayout: React.FC = () => {
                     <MenuBtn view="settings" label="Configurações" icon={<Cog6ToothIcon />} />
                 </nav>
                 <div className="p-4 border-t dark:border-gray-700">
-                    <div className="mb-4 text-sm opacity-70">Olá, <strong>{loggedInUser}</strong></div>
+                    <div className="mb-4 text-sm opacity-70">
+                        Olá, <strong>{currentUser?.name}</strong>
+                        {!isEditor && <span className="block text-xs bg-yellow-100 text-yellow-800 px-1 rounded w-fit mt-1">Modo Leitor</span>}
+                    </div>
                     <button onClick={handleLogout} className="flex items-center gap-2 text-red-500 hover:text-red-600 font-bold text-sm"><ArrowLeftOnRectangleIcon /> Sair</button>
                 </div>
             </aside>
@@ -676,8 +851,12 @@ const MainLayout: React.FC = () => {
                 
                 {/* Mobile Header */}
                 <div className="md:hidden p-4 bg-white dark:bg-gray-800 shadow flex justify-between items-center">
-                    <span className="font-bold">Hotel Palace</span>
-                    <button onClick={() => setCurrentView(currentView === 'dashboard' ? 'settings' : 'dashboard')}><Bars3Icon /></button>
+                    <span className="font-bold flex items-center gap-2"><BuildingIcon/> Hotel Palace</span>
+                    <div className="flex items-center gap-2">
+                        {!isEditor && <span className="text-xs bg-yellow-100 text-yellow-800 px-1 rounded">Leitor</span>}
+                        <button onClick={() => setCurrentView(currentView === 'dashboard' ? 'settings' : 'dashboard')}><Bars3Icon /></button>
+                        <button onClick={handleLogout} className="text-red-500"><ArrowLeftOnRectangleIcon/></button>
+                    </div>
                 </div>
 
                 {currentView === 'dashboard' && <DashboardPage />}
@@ -692,8 +871,8 @@ const MainLayout: React.FC = () => {
 };
 
 const App: React.FC = () => {
-    const { loggedInUser } = useAppContext();
-    if (!loggedInUser) return <LoginPage />;
+    const { currentUser } = useAppContext();
+    if (!currentUser) return <LoginPage />;
     return <MainLayout />;
 };
 
