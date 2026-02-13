@@ -8,7 +8,7 @@ import React, { useState, useEffect, createContext, useContext, useCallback } fr
 import { createRoot } from 'react-dom/client';
 import { createClient } from '@supabase/supabase-js';
 
-// URL DO PROJETO SUPABASE (Atualizada)
+// URL DO PROJETO SUPABASE
 const SUPABASE_URL = 'https://hoepznsyzdlrzzlrlurp.supabase.co';
 
 // CHAVE PÚBLICA (ANON KEY)
@@ -61,6 +61,9 @@ type Reservation = {
     id: number;
     guestName: string;
     contact: string;
+    email?: string; // Novo
+    cpf?: string; // Novo
+    address?: string; // Novo
     accommodation: string;
     bookingChannel: string;
     description: string;
@@ -202,7 +205,8 @@ const useAppLogic = (): AppContextType => {
                     id: r.id, guestName: r.guest_name, contact: r.contact, accommodation: r.accommodation, bookingChannel: r.booking_channel,
                     description: r.description, adults: r.adults, children: r.children, extraBed: r.extra_bed, breakfast: r.breakfast,
                     checkIn: r.check_in, checkOut: r.check_out, numberOfNights: r.number_of_nights, totalRevenue: r.total_revenue,
-                    amountPaid: r.amount_paid, amountPending: r.amount_pending, downPayment: r.down_payment, observations: r.observations, status: r.status
+                    amountPaid: r.amount_paid, amountPending: r.amount_pending, downPayment: r.down_payment, observations: r.observations, status: r.status,
+                    email: r.email || '', cpf: r.cpf || '', address: r.address || ''
                 }));
                 setReservations(mappedRes);
             }
@@ -261,7 +265,8 @@ const useAppLogic = (): AppContextType => {
             children: resData.children, extra_bed: resData.extraBed, breakfast: resData.breakfast,
             check_in: resData.checkIn, check_out: resData.checkOut, number_of_nights: nights,
             total_revenue: resData.totalRevenue, amount_paid: resData.amountPaid, amount_pending: amountPending,
-            down_payment: resData.amountPaid > 0, observations: resData.observations, status: resData.status
+            down_payment: resData.amountPaid > 0, observations: resData.observations, status: resData.status,
+            email: resData.email, cpf: resData.cpf, address: resData.address
         };
 
         const { error } = await supabase.from('reservations').insert([dbData]);
@@ -270,7 +275,7 @@ const useAppLogic = (): AppContextType => {
             await fetchData();
             // Tenta adicionar contato se não existir
             handleAddContact({
-                id: 0, name: resData.guestName, phone: resData.contact, status: 'Hóspede',
+                id: 0, name: resData.guestName, phone: resData.contact, email: resData.email, status: 'Hóspede',
                 notes: `Cliente desde ${resData.checkIn}`, createdAt: '', lastUpdate: ''
             });
         } else {
@@ -292,7 +297,8 @@ const useAppLogic = (): AppContextType => {
             children: resData.children, extra_bed: resData.extraBed, breakfast: resData.breakfast,
             check_in: resData.checkIn, check_out: resData.checkOut, number_of_nights: nights,
             total_revenue: resData.totalRevenue, amount_paid: resData.amountPaid, amount_pending: amountPending,
-            down_payment: resData.amountPaid > 0, observations: resData.observations, status: resData.status
+            down_payment: resData.amountPaid > 0, observations: resData.observations, status: resData.status,
+            email: resData.email, cpf: resData.cpf, address: resData.address
         };
 
         const { error } = await supabase.from('reservations').update(dbData).eq('id', id);
@@ -570,7 +576,7 @@ const ReservationsPage: React.FC = () => {
 const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; reservationToEdit: Reservation | null }> = ({ isOpen, onClose, reservationToEdit }) => {
     const { handleAddReservation, handleUpdateReservation, isLoading } = useAppContext();
     const [formData, setFormData] = useState<any>({
-        guestName: '', contact: '', checkIn: '', checkOut: '', adults: 2, children: 0,
+        guestName: '', contact: '', email: '', cpf: '', address: '', checkIn: '', checkOut: '', adults: 2, children: 0,
         totalRevenue: 0, amountPaid: 0, status: 'Confirmada', accommodation: 'Quarto Padrão',
         bookingChannel: 'WhatsApp', observations: '', extraBed: false, breakfast: true
     });
@@ -581,6 +587,9 @@ const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; rese
                 setFormData({
                     guestName: reservationToEdit.guestName,
                     contact: reservationToEdit.contact,
+                    email: reservationToEdit.email || '',
+                    cpf: reservationToEdit.cpf || '',
+                    address: reservationToEdit.address || '',
                     checkIn: reservationToEdit.checkIn,
                     checkOut: reservationToEdit.checkOut,
                     adults: reservationToEdit.adults,
@@ -596,7 +605,7 @@ const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; rese
                 });
             } else {
                 setFormData({
-                    guestName: '', contact: '', checkIn: '', checkOut: '', adults: 2, children: 0,
+                    guestName: '', contact: '', email: '', cpf: '', address: '', checkIn: '', checkOut: '', adults: 2, children: 0,
                     totalRevenue: 0, amountPaid: 0, status: 'Confirmada', accommodation: 'Quarto Padrão',
                     bookingChannel: 'WhatsApp', observations: '', extraBed: false, breakfast: true
                 });
@@ -637,7 +646,14 @@ const AddReservationModal: React.FC<{ isOpen: boolean; onClose: () => void; rese
                 <div className="flex-1 overflow-y-auto p-6">
                     <form id="reservation-form" onSubmit={handleSubmit} className="space-y-4">
                         <div><label className="text-xs font-semibold">Hóspede</label><input name="guestName" value={formData.guestName} placeholder="Nome Completo" required className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
-                        <div><label className="text-xs font-semibold">Contato</label><input name="contact" value={formData.contact} placeholder="Telefone / Email" className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
+                        
+                        <div className="grid grid-cols-2 gap-3">
+                            <div><label className="text-xs font-semibold">CPF</label><input name="cpf" value={formData.cpf} placeholder="000.000.000-00" className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
+                            <div><label className="text-xs font-semibold">Telefone</label><input name="contact" value={formData.contact} placeholder="(00) 00000-0000" className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
+                        </div>
+
+                        <div><label className="text-xs font-semibold">Email</label><input type="email" name="email" value={formData.email} placeholder="email@exemplo.com" className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
+                        <div><label className="text-xs font-semibold">Endereço</label><input name="address" value={formData.address} placeholder="Rua, Número, Cidade - UF" className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
                         
                         <div className="grid grid-cols-2 gap-3">
                             <div><label className="text-xs font-semibold">Check-in</label><input type="date" name="checkIn" value={formData.checkIn} required className="w-full p-3 border rounded dark:bg-gray-700 dark:text-white" onChange={handleChange} /></div>
